@@ -4,12 +4,13 @@ import logger from 'jet-logger';
 import EnvVars from '@configurations/EnvVars';
 import server from './server';
 
-import { Sequelize } from 'sequelize';
+import { getSequelize } from './sequelize';
+import { Place, Category, User } from './models';
 
 // **** Start server **** //
 
 const msg = 'Express server started on port: ' + EnvVars.port.toString();
-const sequelize = new Sequelize(EnvVars.postgresConnectionString);
+const sequelize = getSequelize();
 
 (async () => {
   try {

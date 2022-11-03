@@ -7,10 +7,9 @@ export interface IListOutput {
   id: number;
   name: string;
   description: string;
+  picture: string;
   createdAt?: Date;
   updatedAt?: Date;
-  places?: Place[];
-  user?: User;
 }
 
 export type IListInput = Optional<IListOutput, 'id'>;
@@ -19,6 +18,7 @@ class List extends Model<IListOutput, IListInput> implements IListOutput {
   declare id: number;
   declare name: string;
   declare description: string;
+  declare picture: string;
   declare createdAt?: Date | undefined;
   declare updatedAt?: Date | undefined;
   declare places: NonAttribute<Place[]>;
@@ -39,6 +39,10 @@ List.init(
       allowNull: false,
     },
     description: DataTypes.TEXT,
+    picture: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   },
   {
     sequelize,

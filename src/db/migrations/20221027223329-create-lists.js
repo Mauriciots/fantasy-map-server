@@ -15,6 +15,10 @@ module.exports = {
         allowNull: false,
       },
       description: Sequelize.TEXT,
+      picture: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {

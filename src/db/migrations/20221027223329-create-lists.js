@@ -23,6 +23,8 @@ module.exports = {
           deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
         },
       },
+      updatedAt: Sequelize.DATE,
+      createdAt: Sequelize.DATE,
     });
   },
 

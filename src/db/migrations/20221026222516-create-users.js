@@ -32,6 +32,8 @@ module.exports = {
       description: {
         type: Sequelize.TEXT,
       },
+      updatedAt: Sequelize.DATE,
+      createdAt: Sequelize.DATE,
     });
   },
 

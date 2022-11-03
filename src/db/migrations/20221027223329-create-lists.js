@@ -15,6 +15,10 @@ module.exports = {
         allowNull: false,
       },
       description: Sequelize.TEXT,
+      picture: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
@@ -23,6 +27,8 @@ module.exports = {
           deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
         },
       },
+      updatedAt: Sequelize.DATE,
+      createdAt: Sequelize.DATE,
     });
   },
 

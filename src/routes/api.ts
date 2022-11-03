@@ -6,6 +6,7 @@ import User from '@models/User';
 import authRoutes from './auth-routes';
 import userRoutes from './user-routes';
 import listRoutes from './list-routes';
+import categoryRoutes from './category-routes';
 
 // **** Init **** //
 
@@ -16,11 +17,7 @@ const apiRouter = Router();
 const authRouter = Router();
 
 // Login user
-authRouter.post(
-  authRoutes.paths.login,
-  validate('email', 'password'),
-  authRoutes.login
-);
+authRouter.post(authRoutes.paths.login, validate('email', 'password'), authRoutes.login);
 
 // Logout user
 authRouter.get(authRoutes.paths.logout, authRoutes.logout);
@@ -36,25 +33,13 @@ const userRouter = Router();
 userRouter.get(userRoutes.paths.get, userRoutes.getAll);
 
 // Add one user
-userRouter.post(
-  userRoutes.paths.add,
-  validate(['user', User.instanceOf]),
-  userRoutes.add
-);
+userRouter.post(userRoutes.paths.add, validate(['user', User.instanceOf]), userRoutes.add);
 
 // Update one user
-userRouter.put(
-  userRoutes.paths.update,
-  validate(['user', User.instanceOf]),
-  userRoutes.update
-);
+userRouter.put(userRoutes.paths.update, validate(['user', User.instanceOf]), userRoutes.update);
 
 // Delete one user
-userRouter.delete(
-  userRoutes.paths.delete,
-  validate(['id', 'number', 'params']),
-  userRoutes.delete
-);
+userRouter.delete(userRoutes.paths.delete, validate(['id', 'number', 'params']), userRoutes.delete);
 
 // Add userRouter
 apiRouter.use(userRoutes.paths.basePath, adminMw, userRouter);
@@ -68,6 +53,16 @@ listRouter.get(listRoutes.paths.get, listRoutes.getById);
 
 // Add listRouter
 apiRouter.use(listRoutes.paths.basePath, listRouter);
+
+// **** Setup categories routes **** //
+
+const categoryRouter = Router();
+
+// Get all
+categoryRouter.get(categoryRoutes.paths.get, categoryRoutes.getAll);
+
+// Add categoryRouter
+apiRouter.use(categoryRoutes.paths.basePath, categoryRouter);
 
 // **** Export default **** //
 

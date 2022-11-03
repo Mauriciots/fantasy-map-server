@@ -1,13 +1,43 @@
-import { DataTypes, Deferrable } from 'sequelize';
+import { DataTypes, Model, NonAttribute, Optional } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import Category from './Category';
 import User from './User';
+import Review from './Review';
+
+export interface IPlaceOutput {
+  id: number;
+  name: string;
+  address: string;
+  description: string;
+  picture: string;
+  category?: Category;
+  user?: User;
+  reviews?: Review[];
+}
+
+export type IPlaceInput = Optional<IPlaceOutput, 'id'>;
+
+class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
+  declare id: number;
+  declare name: string;
+  declare address: string;
+  declare description: string;
+  declare picture: string;
+  declare category?: Category;
+  declare user?: User;
+  declare reviews: NonAttribute<Review[]>;
+}
 
 const sequelize = getSequelize();
 
-const Place = sequelize.define(
-  'Place',
+Place.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,36 +54,19 @@ const Place = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Category,
-        key: 'id',
-        deferrable: new Deferrable.INITIALLY_DEFERRED(),
-      },
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: User,
-        key: 'id',
-        deferrable: new Deferrable.INITIALLY_DEFERRED(),
-      },
-    },
   },
   {
+    sequelize,
+    modelName: 'Place',
     tableName: 'places',
   }
 );
 
-Category.hasMany(Place);
-Place.belongsTo(Category);
+Category.hasMany(Place, { foreignKey: 'categoryId' });
+Place.belongsTo(Category, { foreignKey: 'categoryId' });
 
-User.hasMany(Place);
-Place.belongsTo(User);
-
-User.belongsToMany(Place, { through: 'place_user' });
-Place.belongsToMany(User, { through: 'place_user' });
+User.hasMany(Place, { foreignKey: 'userId' });
+Place.belongsTo(User, { foreignKey: 'userId' });
 
 User.belongsToMany(Place, { through: 'favorites' });
 Place.belongsToMany(User, { through: 'favorites' });

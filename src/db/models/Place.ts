@@ -10,6 +10,8 @@ export interface IPlaceOutput {
   address: string;
   description: string;
   picture: string;
+  latitude: number;
+  longitude: number;
   category?: Category;
   user?: User;
   reviews?: Review[];
@@ -21,6 +23,8 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare id: number;
   declare name: string;
   declare address: string;
+  declare latitude: number;
+  declare longitude: number;
   declare description: string;
   declare picture: string;
   declare category?: Category;
@@ -44,6 +48,14 @@ Place.init(
     },
     address: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    latitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+    },
+    longitude: {
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     description: {

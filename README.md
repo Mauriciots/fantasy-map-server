@@ -2,37 +2,30 @@
 
 This project was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
 
+## Setup
 
-## Available Scripts
+### Connect to Postgres
 
-### `npm run dev`
+Create a new database. Connect to Postgres and run: `create database fantasy_map;`
 
-Run the server in development mode.
+### Create config files
 
-### `npm test`
+- Make a copy of `src/db/config.json.example`, rename it to `config.json` and replace sample data by your database credentials.
 
-Run all unit-tests with hot-reloading.
+- Make a copy of `env/example.env.example`, rename it to `development.env` and replace sample data by actual config.
 
-### `npm test -- --testFile="name of test file" (i.e. --testFile=Users).`
+### Run migrations
 
-Run a single unit-test.
+`npx sequelize-cli db:migrate`
 
-### `npm run test:no-reloading`
+### Seeding database
 
-Run all unit-tests without hot-reloading.
+`npx sequelize-cli db:seed:all`
 
-### `npm run lint`
+### Run server
 
-Check for linting errors.
+`npm run dev`
 
-### `npm run build`
+### Extra
 
-Build the project for production.
-
-### `npm start`
-
-Run the production build (Must be built first).
-
-### `npm start -- --env="name of env file" (default is production).`
-
-Run production build with a different env file.
+If you need to delete all tables and swipe the whole data: `npx sequelize-cli db:migrate:undo:all`

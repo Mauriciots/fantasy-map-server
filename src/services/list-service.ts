@@ -2,7 +2,15 @@ import List from 'src/db/models/List';
 import Place from 'src/db/models/Place';
 import Review from 'src/db/models/Review';
 
-type PlaceWithAverageStars = Omit<Place, 'reviews'> | { averageStars: number | null };
+type PlaceWithAverageStars =
+  | Omit<Place, 'reviews'>
+  | {
+      averageStars: number | null;
+      location: {
+        lat: number;
+        lng: number;
+      };
+    };
 
 type ListWithAverageStars = Omit<List, 'places'> | { places: PlaceWithAverageStars[] };
 
@@ -13,6 +21,10 @@ async function getById(id: number): Promise<ListWithAverageStars | null> {
     address: place.address,
     description: place.description,
     picture: place.picture,
+    location: {
+      lat: place.latitude,
+      lng: place.longitude,
+    },
     averageStars: place.reviews.length ? Math.round(place.reviews.reduce((sum, r) => sum + r.stars, 0) / place.reviews.length) : null,
   });
 
@@ -38,6 +50,7 @@ async function getById(id: number): Promise<ListWithAverageStars | null> {
     name: list.name,
     description: list.description,
     places: list.places.map(mapPlace),
+    picture: list.picture,
   };
 }
 

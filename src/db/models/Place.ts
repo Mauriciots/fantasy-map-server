@@ -1,6 +1,5 @@
 import { DataTypes, Model, NonAttribute, Optional } from 'sequelize';
 import { getSequelize } from '../../sequelize';
-import Category from './Category';
 import User from './User';
 import Review from './Review';
 
@@ -12,7 +11,6 @@ export interface IPlaceOutput {
   picture: string;
   latitude: number;
   longitude: number;
-  category?: Category;
   user?: User;
   reviews?: Review[];
 }
@@ -27,7 +25,6 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare longitude: number;
   declare description: string;
   declare picture: string;
-  declare category?: Category;
   declare user?: User;
   declare reviews: NonAttribute<Review[]>;
 }
@@ -73,9 +70,6 @@ Place.init(
     tableName: 'places',
   }
 );
-
-Category.hasMany(Place, { foreignKey: 'categoryId' });
-Place.belongsTo(Category, { foreignKey: 'categoryId' });
 
 User.hasMany(Place, { foreignKey: 'userId' });
 Place.belongsTo(User, { foreignKey: 'userId' });

@@ -34,14 +34,6 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'categories',
-          key: 'id',
-          deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
-        },
-      },
       userId: {
         type: Sequelize.INTEGER,
         references: {

@@ -2,6 +2,7 @@ import { DataTypes, Model, Optional, NonAttribute } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import Place from './Place';
 import User from './User';
+import Category from './Category';
 
 export interface IListOutput {
   id: number;
@@ -51,6 +52,9 @@ List.init(
     modelName: 'List',
   }
 );
+
+Category.hasMany(List, { foreignKey: 'categoryId' });
+List.belongsTo(Category, { foreignKey: 'categoryId' });
 
 User.hasMany(List, { foreignKey: 'userId' });
 List.belongsTo(User, { foreignKey: 'userId' });

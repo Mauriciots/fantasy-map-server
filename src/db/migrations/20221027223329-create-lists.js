@@ -27,6 +27,14 @@ module.exports = {
           deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
         },
       },
+      categoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'categories',
+          key: 'id',
+          deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
+        },
+      },
       updatedAt: Sequelize.DATE,
       createdAt: Sequelize.DATE,
     });

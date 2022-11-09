@@ -33,6 +33,7 @@ const mapPlace = (place: Place): PlaceWithAverageStars => ({
   },
   averageStars: place.reviews.length ? Math.round(place.reviews.reduce((sum, r) => sum + r.stars, 0) / place.reviews.length) : null,
 });
+
 async function getById(id: number): Promise<ListWithAverageStars | null> {
   const list = await List.findByPk<List>(id, {
     include: {

@@ -1,0 +1,42 @@
+@baseUrl = http://localhost:3001/api
+
+### Places
+
+GET {{baseUrl}}/places/1
+
+###
+
+POST {{baseUrl}}/places
+content-type: application/json
+
+{
+  "name": "Empire State",
+  "address": "New York, NY 10001, USA",
+  "location": {
+    "lat": 40.748691482594346,
+    "lng": -73.985731315646
+  },
+  "description": "Iconic, art deco office tower from 1931 with exhibits & observatories on the 86th & 102nd floors.",
+  "picture": "https://media.timeout.com/images/101705309/image.jpg",
+  "listId": 1
+}
+
+###
+
+PUT {{baseUrl}}/places/1
+content-type: application/json
+
+{
+  "name": "Empire State",
+  "address": "New York, NY 10001, USA",
+  "location": {
+    "lat": 40.748691482594346,
+    "lng": -73.985731315646
+  },
+  "description": "Iconic, art deco office tower from 1931 with exhibits & observatories on the 86th & 102nd floors.",
+  "picture": "https://media.timeout.com/images/101705309/image.jpg"
+}
+
+###
+
+DELETE {{baseUrl}}/places/1

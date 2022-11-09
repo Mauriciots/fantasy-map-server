@@ -7,6 +7,7 @@ import authRoutes from './auth-routes';
 import userRoutes from './user-routes';
 import listRoutes from './list-routes';
 import categoryRoutes from './category-routes';
+import placeRoutes from './place.routes';
 
 // **** Init **** //
 
@@ -70,6 +71,15 @@ categoryRouter.get(categoryRoutes.paths.get, categoryRoutes.getAll);
 // Add categoryRouter
 apiRouter.use(categoryRoutes.paths.basePath, categoryRouter);
 
-// **** Export default **** //
+// **** Setup places routes **** //
+
+const placesRouter = Router();
+placesRouter.get(placeRoutes.paths.getById, placeRoutes.getById);
+placesRouter.post(placeRoutes.paths.create, placeRoutes.create);
+placesRouter.put(placeRoutes.paths.update, placeRoutes.update);
+placesRouter.delete(placeRoutes.paths.delete, placeRoutes.delete);
+
+// Add placesRouter
+apiRouter.use(placeRoutes.paths.basePath, placesRouter);
 
 export default apiRouter;

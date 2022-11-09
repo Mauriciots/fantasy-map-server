@@ -22,6 +22,7 @@ class List extends Model<IListOutput, IListInput> implements IListOutput {
   declare createdAt?: Date | undefined;
   declare updatedAt?: Date | undefined;
   declare places: NonAttribute<Place[]>;
+  declare User: NonAttribute<User>;
 }
 
 const sequelize = getSequelize();

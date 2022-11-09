@@ -48,6 +48,12 @@ apiRouter.use(userRoutes.paths.basePath, adminMw, userRouter);
 
 const listRouter = Router();
 
+// Get most popular
+listRouter.get(listRoutes.paths.getPopular, listRoutes.getMostPopular);
+
+// Get most popular
+listRouter.get(listRoutes.paths.getByQuery, listRoutes.getByQuery);
+
 // Get by Id
 listRouter.get(listRoutes.paths.get, listRoutes.getById);
 

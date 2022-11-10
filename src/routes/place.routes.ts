@@ -1,5 +1,6 @@
 import HttpStatusCodes from '@configurations/HttpStatusCodes';
 import { IReq, IRes } from '@declarations/types';
+import * as placeService from '@services/place-service';
 
 const paths = {
   basePath: '/places',
@@ -12,8 +13,10 @@ const paths = {
 /**
  * Get place by id.
  */
-function getById(req: IReq, res: IRes) {
-  return res.status(HttpStatusCodes.OK).json();
+async function getById(req: IReq, res: IRes) {
+  const id = parseInt(req.params.id, 10);
+  const place = await placeService.getById(id);
+  return res.status(HttpStatusCodes.OK).json(place);
 }
 
 /**

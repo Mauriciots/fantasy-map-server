@@ -25,7 +25,7 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare longitude: number;
   declare description: string;
   declare picture: string;
-  declare user?: User;
+  declare user: User;
   declare reviews: NonAttribute<Review[]>;
 }
 
@@ -72,7 +72,7 @@ Place.init(
 );
 
 User.hasMany(Place, { foreignKey: 'userId' });
-Place.belongsTo(User, { foreignKey: 'userId' });
+Place.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 User.belongsToMany(Place, { through: 'favorites' });
 Place.belongsToMany(User, { through: 'favorites' });

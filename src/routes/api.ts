@@ -8,6 +8,7 @@ import userRoutes from './user-routes';
 import listRoutes from './list-routes';
 import categoryRoutes from './category-routes';
 import placeRoutes from './place.routes';
+import fileRoutes from './file-routes';
 
 // **** Init **** //
 
@@ -81,5 +82,13 @@ placesRouter.delete(placeRoutes.paths.delete, placeRoutes.delete);
 
 // Add placesRouter
 apiRouter.use(placeRoutes.paths.basePath, placesRouter);
+
+// **** Setup files routes **** //
+
+const filesRouter = Router();
+filesRouter.post(fileRoutes.paths.upload, fileRoutes.upload);
+
+// Add filesRouter
+apiRouter.use(fileRoutes.paths.basePath, filesRouter);
 
 export default apiRouter;

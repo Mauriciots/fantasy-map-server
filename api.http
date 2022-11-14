@@ -60,9 +60,19 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="filetoupload"; filename="test-image.jpg"
-Content-Type: image/png
+Content-Type: image/jpeg
 
 < ./test-image.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
+
+PUT {{baseUrl}}/files/replace
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="filetoupload"; filename="5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg"
+Content-Type: image/jpeg
+
+< ./5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

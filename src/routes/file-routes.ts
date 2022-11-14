@@ -6,6 +6,7 @@ import * as fileService from '@services/file-service';
 const paths = {
   basePath: '/files',
   upload: '/upload',
+  replace: '/replace',
 } as const;
 
 /**
@@ -29,7 +30,26 @@ function upload(req: IReq, res: IRes) {
   });
 }
 
+function replace(req: IReq, res: IRes) {
+  const form = new IncomingForm();
+  form.parse(req, (err, _fields, files) => {
+    if (err) {
+      return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
+    }
+
+    if (!files?.filetoupload) {
+      return res.status(HttpStatusCodes.BAD_REQUEST).send();
+    }
+
+    const filetoupload = files.filetoupload as File;
+
+    fileService.replaceFile(filetoupload.filepath, filetoupload.originalFilename as string);
+    return res.status(HttpStatusCodes.NO_CONTENT).send();
+  });
+}
+
 export default {
   paths,
   upload,
+  replace,
 } as const;

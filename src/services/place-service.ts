@@ -33,6 +33,18 @@ interface IPlaceResponse {
   reviews: IReviewResponse[];
 }
 
+export interface IPlaceRequest {
+  name: string;
+  address: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+  description: string;
+  picture: string;
+  listId: number;
+}
+
 const userSelectedAsFavorite = () => false;
 
 const mapUser = (dbUser: User): IUSerResponse => ({
@@ -95,4 +107,38 @@ export async function getById(id: number): Promise<IPlaceResponse | null> {
   }
 
   return mapPlace(place);
+}
+
+export async function create(newPlace: IPlaceRequest): Promise<number> {
+  const place = await Place.create({
+    name: newPlace.name,
+    address: newPlace.address,
+    latitude: newPlace.location.lat,
+    longitude: newPlace.location.lng,
+    description: newPlace.description,
+    picture: newPlace.picture,
+    userId: 1,
+  });
+
+  return place.id;
+}
+
+export async function update(id: number, place: IPlaceRequest): Promise<void> {
+  await Place.update(
+    {
+      name: place.name,
+      address: place.address,
+      latitude: place.location.lat,
+      longitude: place.location.lng,
+      description: place.description,
+      picture: place.picture,
+    },
+    {
+      where: { id },
+    }
+  );
+}
+
+export async function deletePlace(id: number): Promise<void> {
+  // await Place.
 }

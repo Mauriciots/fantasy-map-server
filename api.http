@@ -23,11 +23,11 @@ content-type: application/json
 
 ###
 
-PUT {{baseUrl}}/places/1
+PUT {{baseUrl}}/places/11
 content-type: application/json
 
 {
-  "name": "Empire State",
+  "name": "The Empire State",
   "address": "New York, NY 10001, USA",
   "location": {
     "lat": 40.748691482594346,

@@ -11,6 +11,7 @@ export interface IPlaceOutput {
   picture: string;
   latitude: number;
   longitude: number;
+  userId: number;
   user?: User;
   reviews?: Review[];
 }
@@ -25,6 +26,7 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare longitude: number;
   declare description: string;
   declare picture: string;
+  declare userId: number;
   declare user: User;
   declare reviews: NonAttribute<Review[]>;
 }
@@ -61,6 +63,10 @@ Place.init(
     },
     picture: {
       type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

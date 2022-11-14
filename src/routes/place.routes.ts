@@ -22,21 +22,26 @@ async function getById(req: IReq, res: IRes) {
 /**
  * Create new place.
  */
-function create(req: IReq, res: IRes) {
-  return res.status(HttpStatusCodes.CREATED).json();
+async function create(req: IReq<placeService.IPlaceRequest>, res: IRes) {
+  const newPlace = await placeService.create(req.body);
+  return res.status(HttpStatusCodes.CREATED).json(newPlace);
 }
 
 /**
  * Update place.
  */
-function update(req: IReq, res: IRes) {
-  return res.status(HttpStatusCodes.OK).json();
+async function update(req: IReq<placeService.IPlaceRequest>, res: IRes) {
+  const id = parseInt(req.params.id, 10);
+  await placeService.update(id, req.body);
+  return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 
 /**
  * Delete place.
  */
-function _delete(req: IReq, res: IRes) {
+async function _delete(req: IReq, res: IRes) {
+  const id = parseInt(req.params.id, 10);
+  await placeService.deletePlace(id);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 

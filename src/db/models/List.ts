@@ -2,12 +2,14 @@ import { DataTypes, Model, Optional, NonAttribute } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import Place from './Place';
 import User from './User';
+import Category from './Category';
 
 export interface IListOutput {
   id: number;
   name: string;
   description: string;
   picture: string;
+  deleted: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -19,6 +21,7 @@ class List extends Model<IListOutput, IListInput> implements IListOutput {
   declare name: string;
   declare description: string;
   declare picture: string;
+  declare deleted: boolean;
   declare createdAt?: Date | undefined;
   declare updatedAt?: Date | undefined;
   declare places: NonAttribute<Place[]>;
@@ -44,6 +47,11 @@ List.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize,
@@ -51,6 +59,9 @@ List.init(
     modelName: 'List',
   }
 );
+
+Category.hasMany(List, { foreignKey: 'categoryId' });
+List.belongsTo(Category, { foreignKey: 'categoryId' });
 
 User.hasMany(List, { foreignKey: 'userId' });
 List.belongsTo(User, { foreignKey: 'userId' });

@@ -1,4 +1,4 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model, Optional, NonAttribute } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import Place from './Place';
 import User from './User';
@@ -7,6 +7,7 @@ export interface IReviewOutput {
   id: number;
   content: string;
   stars: number;
+  user?: User;
 }
 
 export type IReviewInput = Optional<IReviewOutput, 'id'>;
@@ -15,6 +16,7 @@ class Review extends Model<IReviewOutput, IReviewInput> implements IReviewOutput
   declare id: number;
   declare content: string;
   declare stars: number;
+  declare user: NonAttribute<User>;
 }
 
 const sequelize = getSequelize();
@@ -41,7 +43,7 @@ Review.init(
 );
 
 User.hasMany(Review, { foreignKey: 'userId' });
-Review.belongsTo(User, { foreignKey: 'userId' });
+Review.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 Place.hasMany(Review, { foreignKey: 'placeId', as: 'reviews' });
 Review.belongsTo(Place, { foreignKey: 'placeId' });

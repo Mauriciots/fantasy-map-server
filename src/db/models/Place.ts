@@ -1,6 +1,5 @@
 import { DataTypes, Model, NonAttribute, Optional } from 'sequelize';
 import { getSequelize } from '../../sequelize';
-import Category from './Category';
 import User from './User';
 import Review from './Review';
 
@@ -12,9 +11,10 @@ export interface IPlaceOutput {
   picture: string;
   latitude: number;
   longitude: number;
-  category?: Category;
+  userId: number;
   user?: User;
   reviews?: Review[];
+  deleted: boolean;
 }
 
 export type IPlaceInput = Optional<IPlaceOutput, 'id'>;
@@ -27,9 +27,10 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare longitude: number;
   declare description: string;
   declare picture: string;
-  declare category?: Category;
-  declare user?: User;
+  declare userId: number;
+  declare user: User;
   declare reviews: NonAttribute<Review[]>;
+  declare deleted: boolean;
 }
 
 const sequelize = getSequelize();
@@ -66,6 +67,15 @@ Place.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize,
@@ -74,11 +84,8 @@ Place.init(
   }
 );
 
-Category.hasMany(Place, { foreignKey: 'categoryId' });
-Place.belongsTo(Category, { foreignKey: 'categoryId' });
-
 User.hasMany(Place, { foreignKey: 'userId' });
-Place.belongsTo(User, { foreignKey: 'userId' });
+Place.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 User.belongsToMany(Place, { through: 'favorites' });
 Place.belongsToMany(User, { through: 'favorites' });

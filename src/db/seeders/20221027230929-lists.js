@@ -12,6 +12,7 @@ module.exports = {
           picture: 'https://www.ctvnews.ca/content/dam/ctvnews/en/images/2020/12/3/basketball-court-1-5216003-1629825004731.jpg',
           userId: 2,
           categoryId: 1,
+          deleted: false,
         },
         {
           name: 'Best places to buy wine',
@@ -19,6 +20,7 @@ module.exports = {
           picture: 'https://ychef.files.bbci.co.uk/976x549/p0cwcj6m.jpg',
           userId: 1,
           categoryId: 7,
+          deleted: false,
         },
       ],
       {}

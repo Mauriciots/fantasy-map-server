@@ -35,6 +35,11 @@ module.exports = {
           deferrable: Sequelize.Deferrable.INITIALLY_DEFERRED,
         },
       },
+      deleted: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       updatedAt: Sequelize.DATE,
       createdAt: Sequelize.DATE,
     });

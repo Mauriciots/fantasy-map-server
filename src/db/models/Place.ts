@@ -14,6 +14,7 @@ export interface IPlaceOutput {
   userId: number;
   user?: User;
   reviews?: Review[];
+  deleted: boolean;
 }
 
 export type IPlaceInput = Optional<IPlaceOutput, 'id'>;
@@ -29,6 +30,7 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare userId: number;
   declare user: User;
   declare reviews: NonAttribute<Review[]>;
+  declare deleted: boolean;
 }
 
 const sequelize = getSequelize();
@@ -68,6 +70,11 @@ Place.init(
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {

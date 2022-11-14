@@ -14,6 +14,7 @@ module.exports = {
           userId: 2,
           latitude: 49.27255272638686,
           longitude: -123.15266690720541,
+          deleted: false,
         },
         {
           name: 'Chinatown craaazy court',
@@ -23,6 +24,7 @@ module.exports = {
           userId: 2,
           latitude: 49.27751469250019,
           longitude: -123.10111132731328,
+          deleted: false,
         },
         {
           name: 'Costco Basketball Court',
@@ -32,6 +34,7 @@ module.exports = {
           userId: 2,
           latitude: 49.278757619791826,
           longitude: -123.10944024551479,
+          deleted: false,
         },
         {
           name: 'Eri Wine Store',
@@ -41,6 +44,7 @@ module.exports = {
           userId: 1,
           latitude: 49.22509073104125,
           longitude: -123.08147945968294,
+          deleted: false,
         },
       ],
       {}

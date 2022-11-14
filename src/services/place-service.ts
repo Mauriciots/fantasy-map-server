@@ -102,7 +102,7 @@ export async function getById(id: number): Promise<IPlaceResponse | null> {
     ],
   });
 
-  if (!place) {
+  if (!place || place.deleted) {
     return null;
   }
 
@@ -118,6 +118,7 @@ export async function create(newPlace: IPlaceRequest): Promise<number> {
     description: newPlace.description,
     picture: newPlace.picture,
     userId: 1,
+    deleted: false,
   });
 
   return place.id;
@@ -139,6 +140,13 @@ export async function update(id: number, place: IPlaceRequest): Promise<void> {
   );
 }
 
-export async function deletePlace(id: number): Promise<void> {
-  // await Place.
+export async function markAsDeleted(id: number): Promise<void> {
+  await Place.update(
+    {
+      deleted: true,
+    },
+    {
+      where: { id },
+    }
+  );
 }

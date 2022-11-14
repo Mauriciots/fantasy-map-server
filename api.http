@@ -1,8 +1,20 @@
 @baseUrl = http://localhost:3001/api
 
+### Lists
+
+GET {{baseUrl}}/lists/1
+
+###
+
+GET {{baseUrl}}/lists/popular
+
+###
+
+GET {{baseUrl}}/lists/search?query=wine
+
 ### Places
 
-GET {{baseUrl}}/places/1
+GET {{baseUrl}}/places/5
 
 ###
 
@@ -23,7 +35,7 @@ content-type: application/json
 
 ###
 
-PUT {{baseUrl}}/places/11
+PUT {{baseUrl}}/places/5
 content-type: application/json
 
 {
@@ -39,4 +51,4 @@ content-type: application/json
 
 ###
 
-DELETE {{baseUrl}}/places/1
+DELETE {{baseUrl}}/places/5

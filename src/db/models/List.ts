@@ -9,6 +9,7 @@ export interface IListOutput {
   name: string;
   description: string;
   picture: string;
+  deleted: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -20,6 +21,7 @@ class List extends Model<IListOutput, IListInput> implements IListOutput {
   declare name: string;
   declare description: string;
   declare picture: string;
+  declare deleted: boolean;
   declare createdAt?: Date | undefined;
   declare updatedAt?: Date | undefined;
   declare places: NonAttribute<Place[]>;
@@ -44,6 +46,11 @@ List.init(
     picture: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {

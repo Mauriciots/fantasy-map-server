@@ -16,6 +16,11 @@ const paths = {
 async function getById(req: IReq, res: IRes) {
   const id = parseInt(req.params.id, 10);
   const place = await placeService.getById(id);
+
+  if (!place) {
+    return res.status(HttpStatusCodes.NOT_FOUND).json('Place not found');
+  }
+
   return res.status(HttpStatusCodes.OK).json(place);
 }
 
@@ -41,7 +46,7 @@ async function update(req: IReq<placeService.IPlaceRequest>, res: IRes) {
  */
 async function _delete(req: IReq, res: IRes) {
   const id = parseInt(req.params.id, 10);
-  await placeService.deletePlace(id);
+  await placeService.markAsDeleted(id);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 

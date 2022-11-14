@@ -39,6 +39,9 @@ async function getById(id: number): Promise<ListWithAverageStars | null> {
     include: {
       model: Place,
       as: 'places',
+      where: {
+        deleted: false,
+      },
       include: [
         {
           model: Review,
@@ -48,7 +51,7 @@ async function getById(id: number): Promise<ListWithAverageStars | null> {
     },
   });
 
-  if (!list) {
+  if (!list || list.deleted) {
     return null;
   }
 
@@ -72,6 +75,7 @@ async function getPopular(): Promise<ListWithUser[]> {
     INNER JOIN "places" ON "places"."id" = "list_place"."placeId"
     INNER JOIN "reviews" ON "places"."id" = "reviews"."placeId"
     INNER JOIN "users" ON "places"."userId" = "users"."id"
+    WHERE "lists"."deleted" IS FALSE
     GROUP BY "lists"."id", "users"."id"
     ORDER BY COUNT(distinct reviews.id) DESC, "updatedAt" DESC, name ASC
     LIMIT 6;
@@ -91,6 +95,7 @@ async function getByQuery(query: string): Promise<ListWithUser[]> {
   const lists = await List.findAll<List>({
     where: {
       [Op.or]: [{ name: { [Op.iLike]: `%${query}%` } }, { description: { [Op.iLike]: `%${query}%` } }],
+      deleted: false,
     },
     include: {
       model: User,

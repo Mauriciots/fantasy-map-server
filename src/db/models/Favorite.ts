@@ -1,4 +1,4 @@
-import { DataTypes, Optional, Model } from 'sequelize';
+import { DataTypes, Optional, Model, NonAttribute } from 'sequelize';
 import User from './User';
 import Place from './Place';
 import { getSequelize } from '../../sequelize';
@@ -15,6 +15,7 @@ class Favorite extends Model<IReviewOutput, IReviewInput> implements IReviewOutp
   declare id: number;
   declare userId: number;
   declare placeId: number;
+  declare place: NonAttribute<Place>;
 }
 
 const sequelize = getSequelize();
@@ -47,6 +48,6 @@ User.hasMany(Favorite, { foreignKey: 'userId', as: 'favorites' });
 Favorite.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 Place.hasMany(Favorite, { foreignKey: 'placeId', as: 'favorites' });
-Favorite.belongsTo(Place, { foreignKey: 'placeId' });
+Favorite.belongsTo(Place, { foreignKey: 'placeId', as: 'place' });
 
 export default Favorite;

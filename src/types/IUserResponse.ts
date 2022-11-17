@@ -1,4 +1,5 @@
 import IListResponse from './IListResponse';
+import IPlaceResponse from './IPlaceResponse';
 import IReviewResponse from './IReviewResponse';
 
 export default interface IUserResponse {
@@ -10,4 +11,5 @@ export default interface IUserResponse {
   description: string;
   lists: IListResponse[];
   reviews: IReviewResponse[];
+  favoritePlaces: IPlaceResponse[];
 }

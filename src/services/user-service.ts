@@ -7,6 +7,7 @@ import IUserResponse from 'src/types/IUserResponse';
 import { mapUser } from '@util/mappers';
 import ISignupRequest from 'src/types/ISignupRequest';
 import IProfileRequest from 'src/types/IProfileRequest';
+import Favorite from 'src/db/models/Favorite';
 
 // userId should be fetched from request header auth.
 const userId = 1;
@@ -23,6 +24,16 @@ export async function getProfile(): Promise<IUserResponse | null> {
         include: [
           {
             model: Place,
+          },
+        ],
+      },
+      {
+        model: Favorite,
+        as: 'favorites',
+        include: [
+          {
+            model: Place,
+            as: 'place',
           },
         ],
       },

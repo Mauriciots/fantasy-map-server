@@ -41,4 +41,5 @@ export const mapUser = (dbUser: User): IUserResponse => ({
   description: dbUser.description,
   lists: dbUser.lists.map((l) => mapList(l)),
   reviews: dbUser.Reviews.map((r) => mapReview(r)),
+  favoritePlaces: dbUser.favorites.map((f) => mapPlace(f.place)),
 });

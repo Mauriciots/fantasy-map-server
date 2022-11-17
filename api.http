@@ -87,18 +87,18 @@ POST {{baseUrl}}/reviews/
 content-type: application/json
 
 {
-  "content": "This is a nice place",
-  "stars": 4,
-  "placeId": 2
+  "content": "It is one of my favorites!",
+  "stars": 5,
+  "placeId": 5
 }
 
 ###
 
-PUT {{baseUrl}}/reviews/7
+PUT {{baseUrl}}/reviews/5
 content-type: application/json
 
 {
-  "content": "This is really a nice place",
+  "content": "It is one of my favorites!",
   "stars": 5
 }
 
@@ -108,4 +108,4 @@ DELETE {{baseUrl}}/reviews/7
 
 ### Favorites
 
-PUT {{baseUrl}}/favorites/2
+PUT {{baseUrl}}/favorites/5

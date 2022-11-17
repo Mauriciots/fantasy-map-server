@@ -1,6 +1,7 @@
 import User from 'src/db/models/User';
 import Place from 'src/db/models/Place';
 import Review from 'src/db/models/Review';
+import Favorite from 'src/db/models/Favorite';
 
 interface IUSerResponse {
   id: number;
@@ -45,7 +46,10 @@ export interface IPlaceRequest {
   listId: number;
 }
 
-const userSelectedAsFavorite = () => false;
+// userId should be fetched from request header auth.
+const userId = 1;
+
+const userSelectedAsFavorite = (userId: number, favorites: Favorite[]) => favorites.some((f) => f.userId === userId);
 
 const mapUser = (dbUser: User): IUSerResponse => ({
   id: dbUser.id,
@@ -77,7 +81,7 @@ const mapPlace = (dbPlace: Place): IPlaceResponse => {
     description: dbPlace.description,
     picture: dbPlace.picture,
     user: mapUser(dbPlace.user),
-    favorite: userSelectedAsFavorite(),
+    favorite: userSelectedAsFavorite(userId, dbPlace.favorites),
     reviews: dbPlace.reviews ? dbPlace.reviews.map((r) => mapReview(r)) : [],
   };
 };
@@ -98,6 +102,10 @@ export async function getById(id: number): Promise<IPlaceResponse | null> {
             as: 'user',
           },
         ],
+      },
+      {
+        model: Favorite,
+        as: 'favorites',
       },
     ],
   });

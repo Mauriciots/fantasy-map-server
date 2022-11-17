@@ -7,8 +7,10 @@ import authRoutes from './auth-routes';
 import userRoutes from './user-routes';
 import listRoutes from './list-routes';
 import categoryRoutes from './category-routes';
-import placeRoutes from './place.routes';
+import placeRoutes from './place-routes';
 import fileRoutes from './file-routes';
+import reviewRoutes from './review-routes';
+import favoriteRoutes from './favorite-routes';
 
 // **** Init **** //
 
@@ -91,5 +93,24 @@ filesRouter.put(fileRoutes.paths.replace, fileRoutes.replace);
 
 // Add filesRouter
 apiRouter.use(fileRoutes.paths.basePath, filesRouter);
+
+// **** Setup reviews routes **** //
+
+const reviewsRouter = Router();
+reviewsRouter.get(reviewRoutes.paths.getByUser, reviewRoutes.getByUser);
+reviewsRouter.post(reviewRoutes.paths.create, reviewRoutes.create);
+reviewsRouter.put(reviewRoutes.paths.update, reviewRoutes.update);
+reviewsRouter.delete(reviewRoutes.paths.delete, reviewRoutes.delete);
+
+// Add reviewsRouter
+apiRouter.use(reviewRoutes.paths.basePath, reviewsRouter);
+
+// **** Setup favorites routes **** //
+
+const favoritesRouter = Router();
+favoritesRouter.put(favoriteRoutes.paths.toggle, favoriteRoutes.toggle);
+
+// Add favoritesRouter
+apiRouter.use(favoriteRoutes.paths.basePath, favoritesRouter);
 
 export default apiRouter;

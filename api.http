@@ -76,3 +76,36 @@ Content-Type: image/jpeg
 
 < ./5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Reviews
+
+GET {{baseUrl}}/reviews/
+
+###
+
+POST {{baseUrl}}/reviews/
+content-type: application/json
+
+{
+  "content": "This is a nice place",
+  "stars": 4,
+  "placeId": 2
+}
+
+###
+
+PUT {{baseUrl}}/reviews/7
+content-type: application/json
+
+{
+  "content": "This is really a nice place",
+  "stars": 5
+}
+
+###
+
+DELETE {{baseUrl}}/reviews/7
+
+### Favorites
+
+PUT {{baseUrl}}/favorites/2

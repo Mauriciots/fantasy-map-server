@@ -19,7 +19,7 @@ type PlaceWithAverageStars =
 
 type ListWithAverageStars = Omit<List, 'places'> | { places: PlaceWithAverageStars[] };
 
-type ListWithUser = Omit<IListOutput, 'createdAt' | 'updatedAt' | 'userId'> | { user: Omit<IUserOutput, 'password'> };
+type ListWithUser = Omit<IListOutput, 'createdAt' | 'updatedAt' | 'userId'> | { user: Omit<IUserOutput, 'password' | 'hash'> };
 
 const mapPlace = (place: Place): PlaceWithAverageStars => ({
   id: place.id,

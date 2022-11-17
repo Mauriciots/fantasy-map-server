@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional, NonAttribute } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import Review from './Review';
+import List from './List';
 
 export interface IUserOutput {
   id: number;
@@ -23,6 +24,7 @@ class User extends Model<IUserOutput, IUserInput> implements IUserOutput {
   declare location: string;
   declare description: string;
   declare Reviews: NonAttribute<Review[]>;
+  declare lists: NonAttribute<List[]>;
 }
 
 const sequelize = getSequelize();

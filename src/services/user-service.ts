@@ -1,66 +1,70 @@
-import userRepo from '@repos/user-repo';
-import { IUser } from '@models/User';
-import { RouteError } from '@declarations/classes';
-import HttpStatusCodes from '@configurations/HttpStatusCodes';
+import bcrypt from 'bcrypt';
+import User from 'src/db/models/User';
+import List from 'src/db/models/List';
+import Review from 'src/db/models/Review';
+import Place from 'src/db/models/Place';
+import IUserResponse from 'src/types/IUserResponse';
+import { mapUser } from '@util/mappers';
+import ISignupRequest from 'src/types/ISignupRequest';
+import IProfileRequest from 'src/types/IProfileRequest';
 
+// userId should be fetched from request header auth.
+const userId = 1;
 
-// **** Variables **** //
+export async function getProfile(): Promise<IUserResponse | null> {
+  const user = await User.findByPk(userId, {
+    include: [
+      {
+        model: List,
+        as: 'lists',
+      },
+      {
+        model: Review,
+        include: [
+          {
+            model: Place,
+          },
+        ],
+      },
+    ],
+  });
 
-export const userNotFoundErr = 'User not found';
-
-
-// **** Functions **** //
-
-/**
- * Get all users.
- */
-function getAll(): Promise<IUser[]> {
-  return userRepo.getAll();
-}
-
-/**
- * Add one user.
- */
-function addOne(user: IUser): Promise<void> {
-  return userRepo.add(user);
-}
-
-/**
- * Update one user.
- */
-async function updateOne(user: IUser): Promise<void> {
-  const persists = await userRepo.persists(user.id);
-  if (!persists) {
-    throw new RouteError(
-      HttpStatusCodes.NOT_FOUND,
-      userNotFoundErr,
-    );
+  if (!user) {
+    return null;
   }
-  // Return user
-  return userRepo.update(user);
+
+  return mapUser(user);
 }
 
-/**
- * Delete a user by their id.
- */
-async function _delete(id: number): Promise<void> {
-  const persists = await userRepo.persists(id);
-  if (!persists) {
-    throw new RouteError(
-      HttpStatusCodes.NOT_FOUND,
-      userNotFoundErr,
-    );
-  }
-  // Delete user
-  return userRepo.delete(id);
+export async function signup(userData: ISignupRequest): Promise<void> {
+  await User.create({
+    name: userData.name,
+    email: userData.email,
+    password: await hashPassword(userData.password),
+    profilePicture: userData.profilePicture,
+    location: '',
+    description: '',
+  });
 }
 
+export async function update(userData: IProfileRequest): Promise<void> {
+  await User.update(
+    {
+      name: userData.name,
+      password: await hashPassword(userData.password),
+      profilePicture: userData.profilePicture,
+      location: userData.location,
+      description: userData.description,
+    },
+    {
+      where: {
+        id: userId,
+      },
+    }
+  );
+}
 
-// **** Export default **** //
-
-export default {
-  getAll,
-  addOne,
-  updateOne,
-  delete: _delete,
-} as const;
+function hashPassword(plainPassword: string): Promise<string> {
+  const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10);
+  return bcrypt.hash(plainPassword, saltRounds);
+}

@@ -43,7 +43,7 @@ Favorite.init(
   }
 );
 
-User.hasMany(Favorite, { foreignKey: 'userId' });
+User.hasMany(Favorite, { foreignKey: 'userId', as: 'favorites' });
 Favorite.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 Place.hasMany(Favorite, { foreignKey: 'placeId', as: 'favorites' });

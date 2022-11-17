@@ -63,7 +63,7 @@ List.init(
 Category.hasMany(List, { foreignKey: 'categoryId' });
 List.belongsTo(Category, { foreignKey: 'categoryId' });
 
-User.hasMany(List, { foreignKey: 'userId' });
+User.hasMany(List, { foreignKey: 'userId', as: 'lists' });
 List.belongsTo(User, { foreignKey: 'userId' });
 
 List.belongsToMany(Place, {

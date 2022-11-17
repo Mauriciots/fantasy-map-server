@@ -2,7 +2,7 @@
 
 ### Lists
 
-GET {{baseUrl}}/lists/1
+GET {{baseUrl}}/lists/2
 
 ###
 
@@ -109,3 +109,32 @@ DELETE {{baseUrl}}/reviews/7
 ### Favorites
 
 PUT {{baseUrl}}/favorites/5
+
+### Users
+
+GET {{baseUrl}}/users/profile
+
+###
+
+POST {{baseUrl}}/users/signup
+content-type: application/json
+
+{
+  "name": "Mateus",
+  "email": "mateus.paula@gmaii.com",
+  "password": "bacon&eggs",
+  "profilePicture": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FhiJwTJo_icon-user-icon-hd-png-download%2F&psig=AOvVaw2Ky-6ZUslVpDI-6qFOaM9p&ust=1668748375935000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKiO96S6tPsCFQAAAAAdAAAAABAE"
+}
+
+###
+
+PUT {{baseUrl}}/users/profile
+content-type: application/json
+
+{
+  "name": "Megumi Akama",
+  "password": "bestteam",
+  "profilePicture": "https://www.w3schools.com/howto/img_avatar.png",
+  "location": "Vancouver, BC",
+  "description": "Gimme some wine now!"
+}

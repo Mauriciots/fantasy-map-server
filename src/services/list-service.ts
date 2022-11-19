@@ -6,6 +6,10 @@ import Place from 'src/db/models/Place';
 import Review from 'src/db/models/Review';
 import User, { IUserOutput } from 'src/db/models/User';
 import { QueryTypes, Op } from 'sequelize';
+import IListRequest from 'src/types/IListRequest';
+
+// userId should be fetched from request header auth.
+const userId = 1;
 
 type PlaceWithAverageStars =
   | Omit<Place, 'reviews'>
@@ -118,8 +122,56 @@ async function getByQuery(query: string): Promise<ListWithUser[]> {
   }));
 }
 
+async function createOrUpdate(listData: IListRequest, id?: number): Promise<null | number> {
+  if (!id) {
+    const values = {
+      name: listData.name,
+      description: listData.description,
+      picture: listData.picture,
+      categoryId: listData.categoryId,
+      userId,
+      deleted: false,
+    } as const;
+    const list = await List.create(values, {
+      include: {
+        model: Place,
+        as: 'places',
+      },
+    });
+    list.setPlaces(listData.placeIds);
+    return list.id;
+  }
+
+  const list = await List.findByPk(id);
+
+  if (!list) {
+    return null;
+  }
+
+  list.name = listData.name;
+  list.description = listData.description;
+  list.picture = listData.picture;
+  list.categoryId = listData.categoryId;
+  list.setPlaces(listData.placeIds);
+  list.save();
+  return id;
+}
+
+async function markAsDeleted(id: number): Promise<void> {
+  await List.update(
+    {
+      deleted: true,
+    },
+    {
+      where: { id },
+    }
+  );
+}
+
 export default {
   getById,
   getPopular,
   getByQuery,
+  createOrUpdate,
+  markAsDeleted,
 } as const;

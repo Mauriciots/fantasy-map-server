@@ -1,4 +1,4 @@
-import { DataTypes, Model, Optional, NonAttribute } from 'sequelize';
+import { DataTypes, Model, Optional, NonAttribute, HasManySetAssociationsMixin } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import Place from './Place';
 import User from './User';
@@ -24,8 +24,11 @@ class List extends Model<IListOutput, IListInput> implements IListOutput {
   declare deleted: boolean;
   declare createdAt?: Date | undefined;
   declare updatedAt?: Date | undefined;
+  declare categoryId: number;
+  declare userId: number;
   declare places: NonAttribute<Place[]>;
   declare User: NonAttribute<User>;
+  declare setPlaces: HasManySetAssociationsMixin<Place, number>;
 }
 
 const sequelize = getSequelize();

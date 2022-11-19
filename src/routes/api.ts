@@ -30,15 +30,12 @@ apiRouter.use(authRoutes.paths.basePath, authRouter);
 // **** Setup lists routes **** //
 
 const listRouter = Router();
-
-// Get most popular
 listRouter.get(listRoutes.paths.getPopular, listRoutes.getMostPopular);
-
-// Get most popular
 listRouter.get(listRoutes.paths.getByQuery, listRoutes.getByQuery);
-
-// Get by Id
 listRouter.get(listRoutes.paths.get, listRoutes.getById);
+listRouter.post(listRoutes.paths.create, listRoutes.create);
+listRouter.put(listRoutes.paths.update, listRoutes.update);
+listRouter.delete(listRoutes.paths.delete, listRoutes.delete);
 
 // Add listRouter
 apiRouter.use(listRoutes.paths.basePath, listRouter);

@@ -4,10 +4,17 @@ import path from 'path';
 
 export function saveFile(filePath: string, fileName: string): string {
   const basePath = path.resolve('./src/public/uploads');
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const newFileName = `${v4() as string}-${fileName}`;
+  const newFileName = `${v4()}-${fileName}`;
   const newPath = `${basePath}/${newFileName}`;
-  fs.mkdirSync(basePath);
+  if (!fs.existsSync(basePath)) {
+    fs.mkdirSync(basePath);
+  }
   fs.renameSync(filePath, newPath);
   return `/uploads/${newFileName}`;
+}
+
+export function replaceFile(filePath: string, fileName: string) {
+  const basePath = path.resolve('./src/public/uploads');
+  const newPath = `${basePath}/${fileName}`;
+  fs.renameSync(filePath, newPath);
 }

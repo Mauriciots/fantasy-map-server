@@ -2,7 +2,7 @@
 
 ### Lists
 
-GET {{baseUrl}}/lists/1
+GET {{baseUrl}}/lists/2
 
 ###
 
@@ -11,6 +11,36 @@ GET {{baseUrl}}/lists/popular
 ###
 
 GET {{baseUrl}}/lists/search?query=wine
+
+###
+
+POST {{baseUrl}}/lists
+Content-Type: application/json
+
+{
+  "name": "Dog friendly places",
+  "description": "Find nice places to enjoy with your best friend.",
+  "picture": "https://vancouver.ca/images/cov/feature/dog-running-off-leash-in-park-landing.jpg",
+  "categoryId": 6,
+  "placeIds": [1, 4]
+}
+
+###
+
+PUT {{baseUrl}}/lists/10
+Content-Type: application/json
+
+{
+  "name": "Best dog friendly places",
+  "description": "Find nice places to enjoy with your best friend.",
+  "picture": "https://vancouver.ca/images/cov/feature/dog-running-off-leash-in-park-landing.jpg",
+  "categoryId": 6,
+  "placeIds": [2, 3]
+}
+
+###
+
+DELETE {{baseUrl}}/lists/10
 
 ### Places
 
@@ -60,9 +90,81 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="filetoupload"; filename="test-image.jpg"
-Content-Type: image/png
+Content-Type: image/jpeg
 
 < ./test-image.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
+
+PUT {{baseUrl}}/files/replace
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="filetoupload"; filename="5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg"
+Content-Type: image/jpeg
+
+< ./5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Reviews
+
+GET {{baseUrl}}/reviews/
+
+###
+
+POST {{baseUrl}}/reviews/
+content-type: application/json
+
+{
+  "content": "It is one of my favorites!",
+  "stars": 5,
+  "placeId": 5
+}
+
+###
+
+PUT {{baseUrl}}/reviews/5
+content-type: application/json
+
+{
+  "content": "It is one of my favorites!",
+  "stars": 5
+}
+
+###
+
+DELETE {{baseUrl}}/reviews/7
+
+### Favorites
+
+PUT {{baseUrl}}/favorites/5
+
+### Users
+
+GET {{baseUrl}}/users/profile
+
+###
+
+POST {{baseUrl}}/users/signup
+content-type: application/json
+
+{
+  "name": "Mateus",
+  "email": "mateus.paula@gmaii.com",
+  "password": "bacon&eggs",
+  "profilePicture": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FhiJwTJo_icon-user-icon-hd-png-download%2F&psig=AOvVaw2Ky-6ZUslVpDI-6qFOaM9p&ust=1668748375935000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKiO96S6tPsCFQAAAAAdAAAAABAE"
+}
+
+###
+
+PUT {{baseUrl}}/users/profile
+content-type: application/json
+
+{
+  "name": "Megumi Akama",
+  "password": "bestteam",
+  "profilePicture": "https://www.w3schools.com/howto/img_avatar.png",
+  "location": "Vancouver, BC",
+  "description": "Gimme some wine now!"
+}

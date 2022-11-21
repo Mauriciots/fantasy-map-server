@@ -2,6 +2,7 @@ import { DataTypes, Model, NonAttribute, Optional } from 'sequelize';
 import { getSequelize } from '../../sequelize';
 import User from './User';
 import Review from './Review';
+import Favorite from './Favorite';
 
 export interface IPlaceOutput {
   id: number;
@@ -14,6 +15,7 @@ export interface IPlaceOutput {
   userId: number;
   user?: User;
   reviews?: Review[];
+  favorites?: Favorite[];
   deleted: boolean;
 }
 
@@ -30,6 +32,7 @@ class Place extends Model<IPlaceOutput, IPlaceInput> implements IPlaceOutput {
   declare userId: number;
   declare user: User;
   declare reviews: NonAttribute<Review[]>;
+  declare favorites: NonAttribute<Favorite[]>;
   declare deleted: boolean;
 }
 
@@ -86,8 +89,5 @@ Place.init(
 
 User.hasMany(Place, { foreignKey: 'userId' });
 Place.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-
-User.belongsToMany(Place, { through: 'favorites' });
-Place.belongsToMany(User, { through: 'favorites' });
 
 export default Place;

@@ -1,66 +1,40 @@
 import HttpStatusCodes from '@configurations/HttpStatusCodes';
-
-import userService from '@services/user-service';
-import { IUser } from '@models/User';
 import { IReq, IRes } from '@declarations/types';
+import * as userServices from '@services/user-service';
+import IProfileRequest from 'src/types/IProfileRequest';
+import ISignupRequest from 'src/types/ISignupRequest';
 
-
-// **** Variables **** //
-
-// Paths
 const paths = {
   basePath: '/users',
-  get: '/all',
-  add: '/add',
-  update: '/update',
-  delete: '/delete/:id',
+  profile: '/profile',
+  signup: '/signup',
+  update: '/profile',
+  delete: '/profile',
 } as const;
 
-
-// **** Functions **** //
-
-/**
- * Get all users.
- */
-async function getAll(_: IReq, res: IRes) {
-  const users = await userService.getAll();
-  return res.status(HttpStatusCodes.OK).json({ users });
+async function getProfile(req: IReq, res: IRes) {
+  const user = await userServices.getProfile();
+  return res.status(HttpStatusCodes.OK).json(user);
 }
 
-/**
- * Add one user.
- */
-async function add(req: IReq<{user: IUser}>, res: IRes) {
-  const { user } = req.body;
-  await userService.addOne(user);
-  return res.status(HttpStatusCodes.CREATED).end();
+async function signup(req: IReq<ISignupRequest>, res: IRes) {
+  await userServices.signup(req.body);
+  return res.status(HttpStatusCodes.OK).send();
 }
 
-/**
- * Update one user.
- */
-async function update(req: IReq<{user: IUser}>, res: IRes) {
-  const { user } = req.body;
-  await userService.updateOne(user);
-  return res.status(HttpStatusCodes.OK).end();
+async function update(req: IReq<IProfileRequest>, res: IRes) {
+  await userServices.update(req.body);
+  return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 
-/**
- * Delete one user.
- */
-async function _delete(req: IReq, res: IRes) {
-  const id = +req.params.id;
-  await userService.delete(id);
-  return res.status(HttpStatusCodes.OK).end();
+function _delete(req: IReq, res: IRes) {
+  return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
-
-
-// **** Export default **** //
 
 export default {
   paths,
-  getAll,
-  add,
+  getProfile,
+  signup,
   update,
   delete: _delete,
-} as const;
+};

@@ -8,6 +8,9 @@ import { mapUser } from '@util/mappers';
 import ISignupRequest from 'src/types/ISignupRequest';
 import IProfileRequest from 'src/types/IProfileRequest';
 import Favorite from 'src/db/models/Favorite';
+import ISigninRequest from 'src/types/ISigninRequest';
+import ISigninResponse from 'src/types/ISigninResponse';
+import jwtUtil from '@util/jwt-util';
 
 // userId should be fetched from request header auth.
 const userId = 1;
@@ -58,6 +61,25 @@ export async function signup(userData: ISignupRequest): Promise<void> {
   });
 }
 
+export async function signin(authData: ISigninRequest): Promise<ISigninResponse | null> {
+  if (!authData.username || !authData.password) {
+    return null;
+  }
+
+  const user = await User.findOne({
+    where: {
+      email: authData.username,
+    },
+  });
+
+  if (user && validatePassword(authData.password, user.password)) {
+    const payload = { id: user.id, email: user.email, name: user.name };
+    const token = await jwtUtil.sign(payload);
+    return { ...payload, token };
+  }
+  return { id: 0, token: '', email: '', name: '' };
+}
+
 export async function update(userData: IProfileRequest): Promise<void> {
   await User.update(
     {
@@ -78,4 +100,8 @@ export async function update(userData: IProfileRequest): Promise<void> {
 function hashPassword(plainPassword: string): Promise<string> {
   const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10);
   return bcrypt.hash(plainPassword, saltRounds);
+}
+
+function validatePassword(plainPassword: string, hashPassword: string): boolean {
+  return bcrypt.compareSync(plainPassword, hashPassword);
 }

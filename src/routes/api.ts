@@ -94,6 +94,8 @@ apiRouter.use(favoriteRoutes.paths.basePath, favoritesRouter);
 const usersRouter = Router();
 usersRouter.get(userRoutes.paths.profile, userRoutes.getProfile);
 usersRouter.post(userRoutes.paths.signup, userRoutes.signup);
+usersRouter.post(userRoutes.paths.signout, userRoutes.signout);
+usersRouter.post(userRoutes.paths.signin, userRoutes.signin);
 usersRouter.put(userRoutes.paths.update, userRoutes.update);
 usersRouter.delete(userRoutes.paths.delete, userRoutes.delete);
 

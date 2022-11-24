@@ -150,9 +150,9 @@ POST {{baseUrl}}/users/signup
 content-type: application/json
 
 {
-  "name": "Mateus",
-  "email": "mateus.paula@gmaii.com",
-  "password": "bacon&eggs",
+  "name": "Franklyn",
+  "email": "fran@gmaii.com",
+  "password": "Amaz1-ng",
   "profilePicture": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FhiJwTJo_icon-user-icon-hd-png-download%2F&psig=AOvVaw2Ky-6ZUslVpDI-6qFOaM9p&ust=1668748375935000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKiO96S6tPsCFQAAAAAdAAAAABAE"
 }
 

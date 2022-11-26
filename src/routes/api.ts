@@ -93,6 +93,7 @@ apiRouter.use(favoriteRoutes.paths.basePath, favoritesRouter);
 
 const usersRouter = Router();
 usersRouter.get(userRoutes.paths.profile, userRoutes.getProfile);
+usersRouter.get(userRoutes.paths.jwt, userRoutes.getUserFromToken);
 usersRouter.post(userRoutes.paths.signup, userRoutes.signup);
 usersRouter.post(userRoutes.paths.signout, userRoutes.signout);
 usersRouter.post(userRoutes.paths.signin, userRoutes.signin);

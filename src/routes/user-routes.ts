@@ -12,6 +12,7 @@ const paths = {
   signup: '/signup',
   signout: '/signout',
   signin: '/signin',
+  jwt: '/jwt',
   update: '/profile',
   delete: '/profile',
 } as const;
@@ -62,9 +63,29 @@ function signout(req: IReq, res: IRes) {
   return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 
+async function getUserFromToken(req: IReq, res: IRes) {
+  // Extract the token
+  const { key } = EnvVars.cookieProps;
+  const jwt = req.signedCookies[key];
+  if (!jwt) {
+    res.clearCookie(key);
+    return res.status(HttpStatusCodes.UNAUTHORIZED);
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const userData = await userServices.getUserFromToken(jwt);
+
+  if (!userData) {
+    res.clearCookie(key);
+    return res.status(HttpStatusCodes.UNAUTHORIZED);
+  }
+
+  return res.status(HttpStatusCodes.OK).json(userData);
+}
+
 export default {
   paths,
   getProfile,
+  getUserFromToken,
   signin,
   signout,
   signup,

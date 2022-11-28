@@ -1,6 +1,6 @@
 import { Router } from 'express';
-
 import validate from './middlware/validate';
+import validateAuth from './middlware/validateAuth';
 import authRoutes from './auth-routes';
 import listRoutes from './list-routes';
 import categoryRoutes from './category-routes';
@@ -32,7 +32,7 @@ apiRouter.use(authRoutes.paths.basePath, authRouter);
 const listRouter = Router();
 listRouter.get(listRoutes.paths.getPopular, listRoutes.getMostPopular);
 listRouter.get(listRoutes.paths.getByQuery, listRoutes.getByQuery);
-listRouter.get(listRoutes.paths.get, listRoutes.getById);
+listRouter.get(listRoutes.paths.get, validateAuth, listRoutes.getById);
 listRouter.post(listRoutes.paths.create, listRoutes.create);
 listRouter.put(listRoutes.paths.update, listRoutes.update);
 listRouter.delete(listRoutes.paths.delete, listRoutes.delete);
@@ -93,7 +93,7 @@ apiRouter.use(favoriteRoutes.paths.basePath, favoritesRouter);
 
 const usersRouter = Router();
 usersRouter.get(userRoutes.paths.profile, userRoutes.getProfile);
-usersRouter.get(userRoutes.paths.jwt, userRoutes.getUserFromToken);
+usersRouter.get(userRoutes.paths.jwt, validateAuth, userRoutes.getUserFromToken);
 usersRouter.post(userRoutes.paths.signup, userRoutes.signup);
 usersRouter.post(userRoutes.paths.signout, userRoutes.signout);
 usersRouter.post(userRoutes.paths.signin, userRoutes.signin);

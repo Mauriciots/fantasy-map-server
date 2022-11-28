@@ -4,6 +4,7 @@ import { IReq, IRes } from '@declarations/types';
 import * as userServices from '@services/user-service';
 import IProfileRequest from 'src/types/IProfileRequest';
 import ISigninRequest from 'src/types/ISigninRequest';
+import ISigninResponse from 'src/types/ISigninResponse';
 import ISignupRequest from 'src/types/ISignupRequest';
 
 const paths = {
@@ -63,23 +64,13 @@ function signout(req: IReq, res: IRes) {
   return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 
-async function getUserFromToken(req: IReq, res: IRes) {
-  // Extract the token
-  const { key } = EnvVars.cookieProps;
-  const jwt = req.signedCookies[key];
-  if (!jwt) {
-    res.clearCookie(key);
-    return res.status(HttpStatusCodes.UNAUTHORIZED);
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const userData = await userServices.getUserFromToken(jwt);
-
-  if (!userData) {
-    res.clearCookie(key);
-    return res.status(HttpStatusCodes.UNAUTHORIZED);
-  }
-
-  return res.status(HttpStatusCodes.OK).json(userData);
+function getUserFromToken(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as ISigninResponse;
+  return res.status(HttpStatusCodes.OK).json({
+    id: authData.id,
+    name: authData.name,
+    email: authData.email,
+  });
 }
 
 export default {

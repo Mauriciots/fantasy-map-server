@@ -1,8 +1,10 @@
 @baseUrl = http://localhost:3001/api
+@authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJmcmFuQGdtYWlpLmNvbSIsIm5hbWUiOiJGcmFua2x5biIsImlhdCI6MTY2OTQxNzc1NCwiZXhwIjoxNjY5Njc2OTU0fQ.LFA7hQRjQaueVfZkfdY-aiTwvDEvbqYbIyx1JhpMEvw.pSEhg%2Fks7ijaJioGzTNVtP2sNxwL9Mits6LpuCk3MfU
 
 ### Lists
 
 GET {{baseUrl}}/lists/2
+Cookie: {{authCookie}}
 
 ###
 

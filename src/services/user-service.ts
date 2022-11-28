@@ -97,23 +97,6 @@ export async function update(userData: IProfileRequest): Promise<void> {
   );
 }
 
-export async function getUserFromToken(jwt: string): Promise<any> {
-  const tokenPayload = await jwtUtil.decode(jwt);
-  const userData = tokenPayload as ISigninResponse;
-
-  const { exp } = tokenPayload as { exp: number; iat: number };
-
-  if (new Date(exp * 1000) <= new Date()) {
-    return null;
-  }
-
-  return {
-    id: userData.id,
-    email: userData.email,
-    name: userData.name,
-  };
-}
-
 function hashPassword(plainPassword: string): Promise<string> {
   const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10);
   return bcrypt.hash(plainPassword, saltRounds);

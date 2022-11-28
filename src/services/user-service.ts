@@ -12,10 +12,7 @@ import ISigninRequest from 'src/types/ISigninRequest';
 import ISigninResponse from 'src/types/ISigninResponse';
 import jwtUtil from '@util/jwt-util';
 
-// userId should be fetched from request header auth.
-const userId = 1;
-
-export async function getProfile(): Promise<IUserResponse | null> {
+export async function getProfile(userId: number): Promise<IUserResponse | null> {
   const user = await User.findByPk(userId, {
     include: [
       {
@@ -80,7 +77,7 @@ export async function signin(authData: ISigninRequest): Promise<ISigninResponse 
   return { id: 0, token: '', email: '', name: '' };
 }
 
-export async function update(userData: IProfileRequest): Promise<void> {
+export async function update(userId: number, userData: IProfileRequest): Promise<void> {
   await User.update(
     {
       name: userData.name,

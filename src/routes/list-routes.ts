@@ -45,13 +45,15 @@ async function getByQuery(req: IReq, res: IRes) {
 }
 
 async function create(req: IReq<IListRequest>, res: IRes) {
-  const newId = await listService.createOrUpdate(req.body);
+  const authData = req.app.locals.auth as { id: number };
+  const newId = await listService.createOrUpdate(authData.id, req.body);
   return res.status(HttpStatusCodes.OK).json(newId);
 }
 
 async function update(req: IReq<IListRequest>, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  const newId = await listService.createOrUpdate(req.body, id);
+  const newId = await listService.createOrUpdate(authData.id, req.body, id);
   if (!newId) {
     return res.status(HttpStatusCodes.NOT_FOUND).json('List not found!');
   }
@@ -59,8 +61,9 @@ async function update(req: IReq<IListRequest>, res: IRes) {
 }
 
 async function _delete(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  await listService.markAsDeleted(id);
+  await listService.markAsDeleted(authData.id, id);
   return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 

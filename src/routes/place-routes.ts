@@ -14,8 +14,9 @@ const paths = {
  * Get place by id.
  */
 async function getById(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  const place = await placeService.getById(id);
+  const place = await placeService.getById(authData.id, id);
 
   if (!place) {
     return res.status(HttpStatusCodes.NOT_FOUND).json('Place not found');
@@ -28,7 +29,8 @@ async function getById(req: IReq, res: IRes) {
  * Create new place.
  */
 async function create(req: IReq<placeService.IPlaceRequest>, res: IRes) {
-  const newPlace = await placeService.create(req.body);
+  const authData = req.app.locals.auth as { id: number };
+  const newPlace = await placeService.create(authData.id, req.body);
   return res.status(HttpStatusCodes.CREATED).json(newPlace);
 }
 
@@ -36,8 +38,9 @@ async function create(req: IReq<placeService.IPlaceRequest>, res: IRes) {
  * Update place.
  */
 async function update(req: IReq<placeService.IPlaceRequest>, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  await placeService.update(id, req.body);
+  await placeService.update(authData.id, id, req.body);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 
@@ -45,8 +48,9 @@ async function update(req: IReq<placeService.IPlaceRequest>, res: IRes) {
  * Delete place.
  */
 async function _delete(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  await placeService.markAsDeleted(id);
+  await placeService.markAsDeleted(authData.id, id);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 

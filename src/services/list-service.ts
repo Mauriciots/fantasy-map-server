@@ -8,9 +8,6 @@ import User, { IUserOutput } from 'src/db/models/User';
 import { QueryTypes, Op } from 'sequelize';
 import IListRequest from 'src/types/IListRequest';
 
-// userId should be fetched from request header auth.
-const userId = 1;
-
 type PlaceWithAverageStars =
   | Omit<Place, 'reviews'>
   | {
@@ -122,7 +119,7 @@ async function getByQuery(query: string): Promise<ListWithUser[]> {
   }));
 }
 
-async function createOrUpdate(listData: IListRequest, id?: number): Promise<null | number> {
+async function createOrUpdate(userId: number, listData: IListRequest, id?: number): Promise<null | number> {
   if (!id) {
     const values = {
       name: listData.name,
@@ -144,7 +141,7 @@ async function createOrUpdate(listData: IListRequest, id?: number): Promise<null
 
   const list = await List.findByPk(id);
 
-  if (!list) {
+  if (!list || list.userId !== userId) {
     return null;
   }
 
@@ -157,13 +154,13 @@ async function createOrUpdate(listData: IListRequest, id?: number): Promise<null
   return id;
 }
 
-async function markAsDeleted(id: number): Promise<void> {
+async function markAsDeleted(userId: number, id: number): Promise<void> {
   await List.update(
     {
       deleted: true,
     },
     {
-      where: { id },
+      where: { id, userId },
     }
   );
 }

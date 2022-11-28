@@ -13,6 +13,7 @@ const paths = {
  * Upload file.
  */
 function upload(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const form = new IncomingForm();
   form.parse(req, (err, _fields, files) => {
     if (err) {
@@ -25,12 +26,13 @@ function upload(req: IReq, res: IRes) {
 
     const filetoupload = files.filetoupload as File;
 
-    const newFilePath = fileService.saveFile(filetoupload.filepath, filetoupload.originalFilename as string);
+    const newFilePath = fileService.saveFile(authData.id, filetoupload.filepath, filetoupload.originalFilename as string);
     return res.status(HttpStatusCodes.OK).json(newFilePath);
   });
 }
 
 function replace(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const form = new IncomingForm();
   form.parse(req, (err, _fields, files) => {
     if (err) {
@@ -43,7 +45,7 @@ function replace(req: IReq, res: IRes) {
 
     const filetoupload = files.filetoupload as File;
 
-    fileService.replaceFile(filetoupload.filepath, filetoupload.originalFilename as string);
+    fileService.replaceFile(authData.id, filetoupload.filepath, filetoupload.originalFilename as string);
     return res.status(HttpStatusCodes.NO_CONTENT).send();
   });
 }

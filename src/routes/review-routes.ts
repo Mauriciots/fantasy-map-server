@@ -14,7 +14,8 @@ const paths = {
  * Get user's reviews.
  */
 async function getByUser(req: IReq, res: IRes) {
-  const reviews = await reviewService.getByUser();
+  const authData = req.app.locals.auth as { id: number };
+  const reviews = await reviewService.getByUser(authData.id);
 
   if (!reviews) {
     return res.status(HttpStatusCodes.NOT_FOUND).json('User not found');
@@ -27,7 +28,8 @@ async function getByUser(req: IReq, res: IRes) {
  * Create review
  */
 async function create(req: IReq<reviewService.IReviewRequest>, res: IRes) {
-  const newReviewId = await reviewService.create(req.body);
+  const authData = req.app.locals.auth as { id: number };
+  const newReviewId = await reviewService.create(authData.id, req.body);
   return res.status(HttpStatusCodes.OK).json(newReviewId);
 }
 
@@ -35,8 +37,9 @@ async function create(req: IReq<reviewService.IReviewRequest>, res: IRes) {
  * Update review.
  */
 async function update(req: IReq<reviewService.IReviewRequest>, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  await reviewService.update(id, req.body);
+  await reviewService.update(authData.id, id, req.body);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 
@@ -44,8 +47,9 @@ async function update(req: IReq<reviewService.IReviewRequest>, res: IRes) {
  * Delete review.
  */
 async function _delete(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
   const id = parseInt(req.params.id, 10);
-  await reviewService.remove(id);
+  await reviewService.remove(authData.id, id);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 

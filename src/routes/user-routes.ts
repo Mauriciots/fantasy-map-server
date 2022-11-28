@@ -19,7 +19,8 @@ const paths = {
 } as const;
 
 async function getProfile(req: IReq, res: IRes) {
-  const user = await userServices.getProfile();
+  const authData = req.app.locals.auth as { id: number };
+  const user = await userServices.getProfile(authData.id);
   return res.status(HttpStatusCodes.OK).json(user);
 }
 
@@ -29,7 +30,8 @@ async function signup(req: IReq<ISignupRequest>, res: IRes) {
 }
 
 async function update(req: IReq<IProfileRequest>, res: IRes) {
-  await userServices.update(req.body);
+  const authData = req.app.locals.auth as { id: number };
+  await userServices.update(authData.id, req.body);
   return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 

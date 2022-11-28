@@ -1,10 +1,7 @@
 import User from '../db/models/User';
 import Review from '../db/models/Review';
 
-// userId should be fetched from request header auth.
-const userId = 1;
-
-export async function getByUser(): Promise<Review[] | null> {
+export async function getByUser(userId: number): Promise<Review[] | null> {
   const user = await User.findByPk(userId, {
     include: [Review],
   });
@@ -20,7 +17,7 @@ export interface IReviewRequest {
   placeId: number;
 }
 
-export async function create(review: IReviewRequest): Promise<number> {
+export async function create(userId: number, review: IReviewRequest): Promise<number> {
   const dbReview = await Review.create({
     content: review.content,
     stars: review.stars,
@@ -30,20 +27,20 @@ export async function create(review: IReviewRequest): Promise<number> {
   return dbReview.id;
 }
 
-export async function update(id: number, review: IReviewRequest): Promise<void> {
+export async function update(userId: number, id: number, review: IReviewRequest): Promise<void> {
   await Review.update(
     {
       content: review.content,
       stars: review.stars,
     },
     {
-      where: { id },
+      where: { id, userId },
     }
   );
 }
 
-export async function remove(id: number): Promise<void> {
+export async function remove(userId: number, id: number): Promise<void> {
   await Review.destroy({
-    where: { id },
+    where: { id, userId },
   });
 }

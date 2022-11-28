@@ -9,10 +9,9 @@ async function validateAuth(req: IReq<any>, res: IRes, next: NextFunction) {
   const { key: authCookieName } = EnvVars.cookieProps;
   const jwt = req.signedCookies[authCookieName];
   const tokenPayload = (await jwtUtil.decode(jwt)) as { exp: number; iat: number };
-  const { exp } = tokenPayload;
 
   // Verify token existance and expiration date
-  const validToken = jwt && new Date(exp * 1000) > new Date();
+  const validToken = jwt && new Date(tokenPayload.exp * 1000) > new Date();
 
   if (!validToken) {
     res.clearCookie(authCookieName);

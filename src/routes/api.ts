@@ -1,7 +1,5 @@
 import { Router } from 'express';
-
-import validate from './middlware/validate';
-import authRoutes from './auth-routes';
+import validateAuth from './middlware/validateAuth';
 import listRoutes from './list-routes';
 import categoryRoutes from './category-routes';
 import placeRoutes from './place-routes';
@@ -14,28 +12,15 @@ import userRoutes from './user-routes';
 
 const apiRouter = Router();
 
-// **** Setup auth routes **** //
-
-const authRouter = Router();
-
-// Login user
-authRouter.post(authRoutes.paths.login, validate('email', 'password'), authRoutes.login);
-
-// Logout user
-authRouter.get(authRoutes.paths.logout, authRoutes.logout);
-
-// Add authRouter
-apiRouter.use(authRoutes.paths.basePath, authRouter);
-
 // **** Setup lists routes **** //
 
 const listRouter = Router();
 listRouter.get(listRoutes.paths.getPopular, listRoutes.getMostPopular);
 listRouter.get(listRoutes.paths.getByQuery, listRoutes.getByQuery);
-listRouter.get(listRoutes.paths.get, listRoutes.getById);
-listRouter.post(listRoutes.paths.create, listRoutes.create);
-listRouter.put(listRoutes.paths.update, listRoutes.update);
-listRouter.delete(listRoutes.paths.delete, listRoutes.delete);
+listRouter.get(listRoutes.paths.get, validateAuth, listRoutes.getById);
+listRouter.post(listRoutes.paths.create, validateAuth, listRoutes.create);
+listRouter.put(listRoutes.paths.update, validateAuth, listRoutes.update);
+listRouter.delete(listRoutes.paths.delete, validateAuth, listRoutes.delete);
 
 // Add listRouter
 apiRouter.use(listRoutes.paths.basePath, listRouter);
@@ -53,10 +38,10 @@ apiRouter.use(categoryRoutes.paths.basePath, categoryRouter);
 // **** Setup places routes **** //
 
 const placesRouter = Router();
-placesRouter.get(placeRoutes.paths.getById, placeRoutes.getById);
-placesRouter.post(placeRoutes.paths.create, placeRoutes.create);
-placesRouter.put(placeRoutes.paths.update, placeRoutes.update);
-placesRouter.delete(placeRoutes.paths.delete, placeRoutes.delete);
+placesRouter.get(placeRoutes.paths.getById, validateAuth, placeRoutes.getById);
+placesRouter.post(placeRoutes.paths.create, validateAuth, placeRoutes.create);
+placesRouter.put(placeRoutes.paths.update, validateAuth, placeRoutes.update);
+placesRouter.delete(placeRoutes.paths.delete, validateAuth, placeRoutes.delete);
 
 // Add placesRouter
 apiRouter.use(placeRoutes.paths.basePath, placesRouter);
@@ -64,8 +49,8 @@ apiRouter.use(placeRoutes.paths.basePath, placesRouter);
 // **** Setup files routes **** //
 
 const filesRouter = Router();
-filesRouter.post(fileRoutes.paths.upload, fileRoutes.upload);
-filesRouter.put(fileRoutes.paths.replace, fileRoutes.replace);
+filesRouter.post(fileRoutes.paths.upload, validateAuth, fileRoutes.upload);
+filesRouter.put(fileRoutes.paths.replace, validateAuth, fileRoutes.replace);
 
 // Add filesRouter
 apiRouter.use(fileRoutes.paths.basePath, filesRouter);
@@ -73,10 +58,10 @@ apiRouter.use(fileRoutes.paths.basePath, filesRouter);
 // **** Setup reviews routes **** //
 
 const reviewsRouter = Router();
-reviewsRouter.get(reviewRoutes.paths.getByUser, reviewRoutes.getByUser);
-reviewsRouter.post(reviewRoutes.paths.create, reviewRoutes.create);
-reviewsRouter.put(reviewRoutes.paths.update, reviewRoutes.update);
-reviewsRouter.delete(reviewRoutes.paths.delete, reviewRoutes.delete);
+reviewsRouter.get(reviewRoutes.paths.getByUser, validateAuth, reviewRoutes.getByUser);
+reviewsRouter.post(reviewRoutes.paths.create, validateAuth, reviewRoutes.create);
+reviewsRouter.put(reviewRoutes.paths.update, validateAuth, reviewRoutes.update);
+reviewsRouter.delete(reviewRoutes.paths.delete, validateAuth, reviewRoutes.delete);
 
 // Add reviewsRouter
 apiRouter.use(reviewRoutes.paths.basePath, reviewsRouter);
@@ -84,7 +69,7 @@ apiRouter.use(reviewRoutes.paths.basePath, reviewsRouter);
 // **** Setup favorites routes **** //
 
 const favoritesRouter = Router();
-favoritesRouter.put(favoriteRoutes.paths.toggle, favoriteRoutes.toggle);
+favoritesRouter.put(favoriteRoutes.paths.toggle, validateAuth, favoriteRoutes.toggle);
 
 // Add favoritesRouter
 apiRouter.use(favoriteRoutes.paths.basePath, favoritesRouter);
@@ -92,11 +77,12 @@ apiRouter.use(favoriteRoutes.paths.basePath, favoritesRouter);
 // **** Setup users routes **** //
 
 const usersRouter = Router();
-usersRouter.get(userRoutes.paths.profile, userRoutes.getProfile);
+usersRouter.get(userRoutes.paths.profile, validateAuth, userRoutes.getProfile);
+usersRouter.get(userRoutes.paths.jwt, validateAuth, userRoutes.getUserFromToken);
 usersRouter.post(userRoutes.paths.signup, userRoutes.signup);
 usersRouter.post(userRoutes.paths.signout, userRoutes.signout);
 usersRouter.post(userRoutes.paths.signin, userRoutes.signin);
-usersRouter.put(userRoutes.paths.update, userRoutes.update);
+usersRouter.put(userRoutes.paths.update, validateAuth, userRoutes.update);
 usersRouter.delete(userRoutes.paths.delete, userRoutes.delete);
 
 // Add usersRouter

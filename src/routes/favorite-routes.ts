@@ -12,7 +12,8 @@ const paths = {
  */
 async function toggle(req: IReq, res: IRes) {
   const id = parseInt(req.params.id, 10);
-  await favoriteService.toggleFavorite(id);
+  const authData = req.app.locals.auth as { id: number };
+  await favoriteService.toggleFavorite(authData.id, id);
   return res.status(HttpStatusCodes.NO_CONTENT).json();
 }
 

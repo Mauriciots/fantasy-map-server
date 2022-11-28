@@ -1,8 +1,10 @@
 @baseUrl = http://localhost:3001/api
+@authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJmcmFuQGdtYWlpLmNvbSIsIm5hbWUiOiJGcmFua2x5biIsImlhdCI6MTY2OTQxNzc1NCwiZXhwIjoxNjY5Njc2OTU0fQ.LFA7hQRjQaueVfZkfdY-aiTwvDEvbqYbIyx1JhpMEvw.pSEhg%2Fks7ijaJioGzTNVtP2sNxwL9Mits6LpuCk3MfU
 
 ### Lists
 
 GET {{baseUrl}}/lists/2
+Cookie: {{authCookie}}
 
 ###
 
@@ -15,40 +17,45 @@ GET {{baseUrl}}/lists/search?query=wine
 ###
 
 POST {{baseUrl}}/lists
+Cookie: {{authCookie}}
 Content-Type: application/json
 
 {
-  "name": "Dog friendly places",
-  "description": "Find nice places to enjoy with your best friend.",
-  "picture": "https://vancouver.ca/images/cov/feature/dog-running-off-leash-in-park-landing.jpg",
-  "categoryId": 6,
+  "name": "A new interesting list",
+  "description": "Find nice places to enjoy with your beloved ones.",
+  "picture": "https://media.istockphoto.com/id/865208774/photo/romantic-dining-at-night.jpg?s=612x612&w=0&k=20&c=Ege0ISa8UanWiqUMDvHLAfIcNhnw42CZdSRevM-NVmk=",
+  "categoryId": 3,
   "placeIds": [1, 4]
 }
 
 ###
 
-PUT {{baseUrl}}/lists/10
+PUT {{baseUrl}}/lists/13
+Cookie: {{authCookie}}
 Content-Type: application/json
 
 {
-  "name": "Best dog friendly places",
-  "description": "Find nice places to enjoy with your best friend.",
-  "picture": "https://vancouver.ca/images/cov/feature/dog-running-off-leash-in-park-landing.jpg",
-  "categoryId": 6,
-  "placeIds": [2, 3]
+  "name": "New interesting list",
+  "description": "Find nice places to enjoy with your beloved ones.",
+  "picture": "https://media.istockphoto.com/id/865208774/photo/romantic-dining-at-night.jpg?s=612x612&w=0&k=20&c=Ege0ISa8UanWiqUMDvHLAfIcNhnw42CZdSRevM-NVmk=",
+  "categoryId": 3,
+  "placeIds": [1, 4]
 }
 
 ###
 
-DELETE {{baseUrl}}/lists/10
+DELETE {{baseUrl}}/lists/13
+Cookie: {{authCookie}}
 
 ### Places
 
-GET {{baseUrl}}/places/5
+GET {{baseUrl}}/places/4
+Cookie: {{authCookie}}
 
 ###
 
 POST {{baseUrl}}/places
+Cookie: {{authCookie}}
 content-type: application/json
 
 {
@@ -65,7 +72,8 @@ content-type: application/json
 
 ###
 
-PUT {{baseUrl}}/places/5
+PUT {{baseUrl}}/places/4
+Cookie: {{authCookie}}
 content-type: application/json
 
 {
@@ -82,10 +90,12 @@ content-type: application/json
 ###
 
 DELETE {{baseUrl}}/places/5
+Cookie: {{authCookie}}
 
 ### Files
 
 POST {{baseUrl}}/files/upload
+Cookie: {{authCookie}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -98,51 +108,58 @@ Content-Type: image/jpeg
 ###
 
 PUT {{baseUrl}}/files/replace
+Cookie: {{authCookie}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="filetoupload"; filename="5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg"
+Content-Disposition: form-data; name="filetoupload"; filename="cc0d3c5f-c15e-4362-b6c4-90f12ad2e956-test-image.jpg"
 Content-Type: image/jpeg
 
-< ./5079710b-1468-410b-a445-ae45a9b7a439-test-image.jpg
+< ./cc0d3c5f-c15e-4362-b6c4-90f12ad2e956-test-image.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### Reviews
 
 GET {{baseUrl}}/reviews/
+Cookie: {{authCookie}}
 
 ###
 
 POST {{baseUrl}}/reviews/
+Cookie: {{authCookie}}
 content-type: application/json
 
 {
   "content": "It is one of my favorites!",
   "stars": 5,
-  "placeId": 5
+  "placeId": 4
 }
 
 ###
 
-PUT {{baseUrl}}/reviews/5
+PUT {{baseUrl}}/reviews/8
+Cookie: {{authCookie}}
 content-type: application/json
 
 {
-  "content": "It is one of my favorites!",
+  "content": "It is The best!",
   "stars": 5
 }
 
 ###
 
-DELETE {{baseUrl}}/reviews/7
+DELETE {{baseUrl}}/reviews/8
+Cookie: {{authCookie}}
 
 ### Favorites
 
-PUT {{baseUrl}}/favorites/5
+PUT {{baseUrl}}/favorites/4
+Cookie: {{authCookie}}
 
 ### Users
 
 GET {{baseUrl}}/users/profile
+Cookie: {{authCookie}}
 
 ###
 
@@ -159,12 +176,13 @@ content-type: application/json
 ###
 
 PUT {{baseUrl}}/users/profile
+Cookie: {{authCookie}}
 content-type: application/json
 
 {
-  "name": "Megumi Akama",
-  "password": "bestteam",
+  "name": "Jack Johnson",
+  "password": "Amaz1-ng",
   "profilePicture": "https://www.w3schools.com/howto/img_avatar.png",
   "location": "Vancouver, BC",
-  "description": "Gimme some wine now!"
+  "description": "She can make angels"
 }

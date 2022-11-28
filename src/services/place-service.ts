@@ -46,9 +46,6 @@ export interface IPlaceRequest {
   listId: number;
 }
 
-// userId should be fetched from request header auth.
-const userId = 1;
-
 const userSelectedAsFavorite = (userId: number, favorites: Favorite[]) => favorites.some((f) => f.userId === userId);
 
 const mapUser = (dbUser: User): IUSerResponse => ({
@@ -69,7 +66,7 @@ const mapReview = (dbReview: Review): IReviewResponse => {
   };
 };
 
-const mapPlace = (dbPlace: Place): IPlaceResponse => {
+const mapPlace = (userId: number, dbPlace: Place): IPlaceResponse => {
   return {
     id: dbPlace.id,
     name: dbPlace.name,
@@ -86,7 +83,7 @@ const mapPlace = (dbPlace: Place): IPlaceResponse => {
   };
 };
 
-export async function getById(id: number): Promise<IPlaceResponse | null> {
+export async function getById(userId: number, id: number): Promise<IPlaceResponse | null> {
   const place = await Place.findByPk<Place>(id, {
     include: [
       {
@@ -114,10 +111,10 @@ export async function getById(id: number): Promise<IPlaceResponse | null> {
     return null;
   }
 
-  return mapPlace(place);
+  return mapPlace(userId, place);
 }
 
-export async function create(newPlace: IPlaceRequest): Promise<number> {
+export async function create(userId: number, newPlace: IPlaceRequest): Promise<number> {
   const place = await Place.create({
     name: newPlace.name,
     address: newPlace.address,
@@ -125,14 +122,14 @@ export async function create(newPlace: IPlaceRequest): Promise<number> {
     longitude: newPlace.location.lng,
     description: newPlace.description,
     picture: newPlace.picture,
-    userId: 1,
+    userId,
     deleted: false,
   });
 
   return place.id;
 }
 
-export async function update(id: number, place: IPlaceRequest): Promise<void> {
+export async function update(userId: number, id: number, place: IPlaceRequest): Promise<void> {
   await Place.update(
     {
       name: place.name,
@@ -143,18 +140,18 @@ export async function update(id: number, place: IPlaceRequest): Promise<void> {
       picture: place.picture,
     },
     {
-      where: { id },
+      where: { id, userId },
     }
   );
 }
 
-export async function markAsDeleted(id: number): Promise<void> {
+export async function markAsDeleted(userId: number, id: number): Promise<void> {
   await Place.update(
     {
       deleted: true,
     },
     {
-      where: { id },
+      where: { id, userId },
     }
   );
 }

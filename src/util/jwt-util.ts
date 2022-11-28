@@ -1,7 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 import EnvVars from '../configurations/EnvVars';
 
-
 // **** Variables **** //
 
 // Errors
@@ -13,7 +12,6 @@ const errors = {
 const options = {
   expiresIn: EnvVars.jwt.exp,
 };
-
 
 // **** Functions **** //
 
@@ -32,13 +30,12 @@ function sign(data: string | object | Buffer): Promise<string> {
  * Decrypt JWT and extract client data.
  */
 function decode<T>(jwt: string): Promise<string | undefined | T> {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     jsonwebtoken.verify(jwt, EnvVars.jwt.secret, (err, decoded) => {
-      return err ? rej(errors.validation) : res(decoded as T);
+      return err ? res(null as T) : res(decoded as T);
     });
   });
 }
-
 
 // **** Export default **** //
 

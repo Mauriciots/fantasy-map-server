@@ -12,6 +12,7 @@ export interface IListOutput {
   deleted: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  userId?: number;
 }
 
 export type IListInput = Optional<IListOutput, 'id'>;

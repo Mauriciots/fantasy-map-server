@@ -4,6 +4,7 @@ import { IReq, IRes } from '@declarations/types';
 import * as userServices from '@services/user-service';
 import IProfileRequest from 'src/types/IProfileRequest';
 import ISigninRequest from 'src/types/ISigninRequest';
+import ISigninResponse from 'src/types/ISigninResponse';
 import ISignupRequest from 'src/types/ISignupRequest';
 
 const paths = {
@@ -12,12 +13,14 @@ const paths = {
   signup: '/signup',
   signout: '/signout',
   signin: '/signin',
+  jwt: '/jwt',
   update: '/profile',
   delete: '/profile',
 } as const;
 
 async function getProfile(req: IReq, res: IRes) {
-  const user = await userServices.getProfile();
+  const authData = req.app.locals.auth as { id: number };
+  const user = await userServices.getProfile(authData.id);
   return res.status(HttpStatusCodes.OK).json(user);
 }
 
@@ -27,7 +30,8 @@ async function signup(req: IReq<ISignupRequest>, res: IRes) {
 }
 
 async function update(req: IReq<IProfileRequest>, res: IRes) {
-  await userServices.update(req.body);
+  const authData = req.app.locals.auth as { id: number };
+  await userServices.update(authData.id, req.body);
   return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 
@@ -62,9 +66,19 @@ function signout(req: IReq, res: IRes) {
   return res.status(HttpStatusCodes.NO_CONTENT).send();
 }
 
+function getUserFromToken(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as ISigninResponse;
+  return res.status(HttpStatusCodes.OK).json({
+    id: authData.id,
+    name: authData.name,
+    email: authData.email,
+  });
+}
+
 export default {
   paths,
   getProfile,
+  getUserFromToken,
   signin,
   signout,
   signup,

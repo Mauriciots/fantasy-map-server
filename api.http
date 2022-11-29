@@ -54,6 +54,11 @@ Cookie: {{authCookie}}
 
 ###
 
+GET {{baseUrl}}/places
+Cookie: {{authCookie}}
+
+###
+
 POST {{baseUrl}}/places
 Cookie: {{authCookie}}
 content-type: application/json

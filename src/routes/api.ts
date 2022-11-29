@@ -39,6 +39,7 @@ apiRouter.use(categoryRoutes.paths.basePath, categoryRouter);
 
 const placesRouter = Router();
 placesRouter.get(placeRoutes.paths.getById, validateAuth, placeRoutes.getById);
+placesRouter.get(placeRoutes.paths.getAllByUserId, validateAuth, placeRoutes.getAllByUserId);
 placesRouter.post(placeRoutes.paths.create, validateAuth, placeRoutes.create);
 placesRouter.put(placeRoutes.paths.update, validateAuth, placeRoutes.update);
 placesRouter.delete(placeRoutes.paths.delete, validateAuth, placeRoutes.delete);

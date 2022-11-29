@@ -114,6 +114,36 @@ export async function getById(userId: number, id: number): Promise<IPlaceRespons
   return mapPlace(userId, place);
 }
 
+export async function getAllByUserId(userId: number) {
+  const places = await Place.findAll<Place>({
+    include: [
+      {
+        model: User,
+        as: 'user',
+      },
+      {
+        model: Review,
+        as: 'reviews',
+        include: [
+          {
+            model: User,
+            as: 'user',
+          },
+        ],
+      },
+      {
+        model: Favorite,
+        as: 'favorites',
+      },
+    ],
+    where: {
+      userId,
+    },
+  });
+
+  return places.map((p) => mapPlace(userId, p));
+}
+
 export async function create(userId: number, newPlace: IPlaceRequest): Promise<number> {
   const place = await Place.create({
     name: newPlace.name,

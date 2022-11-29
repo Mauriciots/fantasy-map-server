@@ -5,6 +5,7 @@ import * as placeService from '@services/place-service';
 const paths = {
   basePath: '/places',
   getById: '/:id',
+  getAllByUserId: '/',
   create: '/',
   update: '/:id',
   delete: '/:id',
@@ -23,6 +24,12 @@ async function getById(req: IReq, res: IRes) {
   }
 
   return res.status(HttpStatusCodes.OK).json(place);
+}
+
+async function getAllByUserId(req: IReq, res: IRes) {
+  const authData = req.app.locals.auth as { id: number };
+  const places = await placeService.getAllByUserId(authData.id);
+  return res.status(HttpStatusCodes.OK).json(places);
 }
 
 /**
@@ -57,6 +64,7 @@ async function _delete(req: IReq, res: IRes) {
 export default {
   paths,
   getById,
+  getAllByUserId,
   create,
   update,
   delete: _delete,

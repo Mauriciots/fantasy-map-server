@@ -25,8 +25,14 @@ async function getProfile(req: IReq, res: IRes) {
 }
 
 async function signup(req: IReq<ISignupRequest>, res: IRes) {
-  await userServices.signup(req.body);
-  return res.status(HttpStatusCodes.OK).send();
+  const result = await userServices.signup(req.body);
+  const { key, options } = EnvVars.cookieProps;
+  res.cookie(key, result.token, options);
+  return res.status(HttpStatusCodes.OK).json({
+    id: result.id,
+    name: result.name,
+    email: result.email,
+  });
 }
 
 async function update(req: IReq<IProfileRequest>, res: IRes) {

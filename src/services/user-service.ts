@@ -47,8 +47,8 @@ export async function getProfile(userId: number): Promise<IUserResponse | null> 
   return mapUser(user);
 }
 
-export async function signup(userData: ISignupRequest): Promise<void> {
-  await User.create({
+export async function signup(userData: ISignupRequest): Promise<ISigninResponse> {
+  const user = await User.create({
     name: userData.name,
     email: userData.email,
     password: await hashPassword(userData.password),
@@ -56,6 +56,10 @@ export async function signup(userData: ISignupRequest): Promise<void> {
     location: '',
     description: '',
   });
+
+  const payload = { id: user.id, email: user.email, name: user.name };
+  const token = await jwtUtil.sign(payload);
+  return { ...payload, token };
 }
 
 export async function signin(authData: ISigninRequest): Promise<ISigninResponse | null> {

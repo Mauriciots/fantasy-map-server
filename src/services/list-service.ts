@@ -49,6 +49,7 @@ async function getById(id: number): Promise<ListWithAverageStars | null> {
           as: 'reviews',
         },
       ],
+      required: false,
     },
   });
 
@@ -62,6 +63,8 @@ async function getById(id: number): Promise<ListWithAverageStars | null> {
     description: list.description,
     places: list.places.map(mapPlace),
     picture: list.picture,
+    categoryId: list.categoryId,
+    userId: list.userId,
   };
 }
 
@@ -72,10 +75,10 @@ async function getPopular(): Promise<ListWithUser[]> {
     SELECT "lists".*, "users"."id" as "user.id", "users"."name" as "user.name",
     "users"."email" as "user.email", "users"."profilePicture" as "user.profilePicture",
     "users"."location" as "user.location", "users"."description" as "user.description"
-    FROM "lists" INNER JOIN "list_place" ON "lists"."id" = "list_place"."listId"
-    INNER JOIN "places" ON "places"."id" = "list_place"."placeId"
-    INNER JOIN "reviews" ON "places"."id" = "reviews"."placeId"
-    INNER JOIN "users" ON "places"."userId" = "users"."id"
+    FROM "lists" LEFT JOIN "list_place" ON "lists"."id" = "list_place"."listId"
+    LEFT JOIN "places" ON "places"."id" = "list_place"."placeId"
+    LEFT JOIN "reviews" ON "places"."id" = "reviews"."placeId"
+    LEFT JOIN "users" ON "lists"."userId" = "users"."id"
     WHERE "lists"."deleted" IS FALSE
     GROUP BY "lists"."id", "users"."id"
     ORDER BY COUNT(distinct reviews.id) DESC, "updatedAt" DESC, name ASC
@@ -96,6 +99,33 @@ async function getByQuery(query: string): Promise<ListWithUser[]> {
   const lists = await List.findAll<List>({
     where: {
       [Op.or]: [{ name: { [Op.iLike]: `%${query}%` } }, { description: { [Op.iLike]: `%${query}%` } }],
+      deleted: false,
+    },
+    include: {
+      model: User,
+    },
+  });
+
+  return lists.map((list) => ({
+    id: list.id,
+    name: list.name,
+    description: list.description,
+    picture: list.picture,
+    user: {
+      id: list.User.id,
+      name: list.User.name,
+      email: list.User.email,
+      profilePicture: list.User.profilePicture,
+      location: list.User.location,
+      description: list.User.description,
+    },
+  }));
+}
+
+async function getByCategory(categoryId: number): Promise<ListWithUser[]> {
+  const lists = await List.findAll<List>({
+    where: {
+      categoryId,
       deleted: false,
     },
     include: {
@@ -169,6 +199,7 @@ export default {
   getById,
   getPopular,
   getByQuery,
+  getByCategory,
   createOrUpdate,
   markAsDeleted,
 } as const;

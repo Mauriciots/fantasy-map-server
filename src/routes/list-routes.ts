@@ -8,6 +8,7 @@ const paths = {
   get: '/:id',
   getPopular: '/popular',
   getByQuery: '/search',
+  getByCategory: '/category/:id',
   create: '/',
   update: '/:id',
   delete: '/:id',
@@ -44,6 +45,15 @@ async function getByQuery(req: IReq, res: IRes) {
   return res.status(HttpStatusCodes.OK).json(lists);
 }
 
+/**
+ * Get lists by categories.
+ */
+async function getByCategory(req: IReq, res: IRes) {
+  const categoryId = parseInt(req.params.id, 10);
+  const lists = await listService.getByCategory(categoryId);
+  return res.status(HttpStatusCodes.OK).json(lists);
+}
+
 async function create(req: IReq<IListRequest>, res: IRes) {
   const authData = req.app.locals.auth as { id: number };
   const newId = await listService.createOrUpdate(authData.id, req.body);
@@ -72,6 +82,7 @@ export default {
   getById,
   getMostPopular,
   getByQuery,
+  getByCategory,
   create,
   update,
   delete: _delete,

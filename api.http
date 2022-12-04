@@ -1,9 +1,9 @@
 @baseUrl = http://localhost:3001/api
-@authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJmcmFuQGdtYWlpLmNvbSIsIm5hbWUiOiJKYWNrIEpvaG5zb24iLCJpYXQiOjE2Njk3NjA2MDIsImV4cCI6MTY2OTgwMzgwMn0.yurOwUCTQ2HQyv82DjV0_r5sxKzAUqusQqw4AHN9l3Y.0Wl9mOtZPrSun0S8VK010b30s%2F52tbd8H90r7uYkUt8
+@authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJtQHVyaWNpby5jb20iLCJuYW1lIjoiTWF1cmljaW8iLCJpYXQiOjE2NzAxODY5NzIsImV4cCI6MTY3MDIzMDE3Mn0.HUTCszpcUVObk27YgVEydznVqPz7iItDEsiRXp9qW68.efVsPgsXOVxHhzfjHan%2Bs0Swx4zl0OIJKDumaEDb5%2FQ
 
 ### Lists
 
-GET {{baseUrl}}/lists/2
+GET {{baseUrl}}/lists/18
 Cookie: {{authCookie}}
 
 ###
@@ -13,6 +13,10 @@ GET {{baseUrl}}/lists/popular
 ###
 
 GET {{baseUrl}}/lists/search?query=wine
+
+###
+
+GET {{baseUrl}}/lists/category/1
 
 ###
 

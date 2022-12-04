@@ -17,6 +17,7 @@ const apiRouter = Router();
 const listRouter = Router();
 listRouter.get(listRoutes.paths.getPopular, listRoutes.getMostPopular);
 listRouter.get(listRoutes.paths.getByQuery, listRoutes.getByQuery);
+listRouter.get(listRoutes.paths.getByCategory, listRoutes.getByCategory);
 listRouter.get(listRoutes.paths.get, validateAuth, listRoutes.getById);
 listRouter.post(listRoutes.paths.create, validateAuth, listRoutes.create);
 listRouter.put(listRoutes.paths.update, validateAuth, listRoutes.update);

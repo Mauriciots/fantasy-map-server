@@ -13,6 +13,7 @@ export interface IListOutput {
   createdAt?: Date;
   updatedAt?: Date;
   userId?: number;
+  categoryId?: number;
 }
 
 export type IListInput = Optional<IListOutput, 'id'>;

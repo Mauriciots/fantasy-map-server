@@ -138,6 +138,7 @@ async function getByCategory(categoryId: number): Promise<ListWithUser[]> {
     name: list.name,
     description: list.description,
     picture: list.picture,
+    categoryId: list.categoryId,
     user: {
       id: list.User.id,
       name: list.User.name,

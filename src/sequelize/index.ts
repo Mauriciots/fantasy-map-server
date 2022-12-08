@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Dialect, Sequelize } from 'sequelize';
 import EnvVars from '@configurations/EnvVars';
 
 let sequelizeInstance: Sequelize | null = null;
@@ -6,7 +6,10 @@ let sequelizeInstance: Sequelize | null = null;
 export const getSequelize = () => {
   if (!sequelizeInstance) {
     console.log('Creating new sequelize instance');
-    sequelizeInstance = new Sequelize(EnvVars.postgresConnectionString);
+    sequelizeInstance = new Sequelize(EnvVars.dbName, EnvVars.dbUser, EnvVars.dbPassword, {
+      dialect: EnvVars.dbDialect as Dialect,
+      host: EnvVars.dbHost,
+    });
   }
   return sequelizeInstance;
 };

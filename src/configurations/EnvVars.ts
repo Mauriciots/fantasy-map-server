@@ -19,5 +19,9 @@ export default {
     secret: process.env.JWT_SECRET ?? '',
     exp: process.env.COOKIE_EXP ?? '', // exp at the same time as the cookie
   },
-  postgresConnectionString: process.env.POSTGRES_CONNECTION_STRING ?? '',
+  dbDialect: process.env.DB_DIALECT ?? '',
+  dbHost: process.env.DB_HOST ?? '',
+  dbUser: process.env.DB_USER ?? '',
+  dbPassword: process.env.DB_PASSWORD ?? '',
+  dbName: process.env.DB_NAME ?? '',
 } as const;

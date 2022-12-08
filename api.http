@@ -190,7 +190,6 @@ content-type: application/json
 
 {
   "name": "Jack Johnson",
-  "password": "Amaz1-ng",
   "profilePicture": "https://www.w3schools.com/howto/img_avatar.png",
   "location": "Vancouver, BC",
   "description": "She can make angels"

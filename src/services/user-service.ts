@@ -85,7 +85,7 @@ export async function update(userId: number, userData: IProfileRequest): Promise
   await User.update(
     {
       name: userData.name,
-      password: await hashPassword(userData.password),
+      // password: await hashPassword(userData.password),
       profilePicture: userData.profilePicture,
       location: userData.location,
       description: userData.description,

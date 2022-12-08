@@ -34,20 +34,9 @@ app.use((err, _, res, next) => {
     }
     return res.status(status).json({ error: err.message });
 });
-const viewsDir = path_1.default.join(__dirname, 'views');
-app.set('views', viewsDir);
 const staticDir = path_1.default.join(__dirname, 'public');
 app.use(express_1.default.static(staticDir));
 app.get('/', (_, res) => {
-    res.sendFile('login.html', { root: viewsDir });
-});
-app.get('/users', (req, res) => {
-    const jwt = req.signedCookies[EnvVars_1.default.cookieProps.key];
-    if (!jwt) {
-        res.redirect('/');
-    }
-    else {
-        res.sendFile('users.html', { root: viewsDir });
-    }
+    res.sendFile('index.html', { root: staticDir });
 });
 exports.default = app;

@@ -24,4 +24,6 @@ export default {
   dbUser: process.env.DB_USER ?? '',
   dbPassword: process.env.DB_PASSWORD ?? '',
   dbName: process.env.DB_NAME ?? '',
+  sbProjectUrl: process.env.SB_PROJECT_URL ?? '',
+  sbApiKey: process.env.SB_API_KEY ?? '',
 } as const;

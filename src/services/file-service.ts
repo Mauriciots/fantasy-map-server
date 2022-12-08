@@ -1,20 +1,23 @@
 import fs from 'fs';
 import { v4 } from 'uuid';
 import path from 'path';
+import EnvVars from '@configurations/EnvVars';
+import { createClient } from '@supabase/supabase-js';
 
-export function saveFile(userId: number, filePath: string, fileName: string): string {
-  const basePath = path.resolve('./src/public/uploads');
+export async function saveFile(userId: number, filePath: string, fileName: string): Promise<string> {
+  const supabase = createClient(EnvVars.sbProjectUrl, EnvVars.sbApiKey);
+
   const newFileName = `${v4()}-${fileName}`;
-  const newPath = `${basePath}/${userId}/${newFileName}`;
-  if (!fs.existsSync(`${basePath}/${userId}`)) {
-    fs.mkdirSync(`${basePath}/${userId}`);
-  }
-  fs.renameSync(filePath, newPath);
-  return `/uploads/${userId}/${newFileName}`;
-}
+  const fileBuffer = fs.readFileSync(filePath);
 
-export function replaceFile(userId: number, filePath: string, fileName: string) {
-  const basePath = path.resolve('./src/public/uploads');
-  const newPath = `${basePath}/${userId}/${fileName}`;
-  fs.renameSync(filePath, newPath);
+  const { data, error } = await supabase.storage.from('uploads').upload(`${userId}/${newFileName}`, fileBuffer, {
+    cacheControl: '3600',
+    upsert: false,
+  });
+
+  if (!data && error) {
+    throw error.message;
+  }
+
+  return data.path;
 }

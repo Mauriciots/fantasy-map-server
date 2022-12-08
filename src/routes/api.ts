@@ -52,7 +52,6 @@ apiRouter.use(placeRoutes.paths.basePath, placesRouter);
 
 const filesRouter = Router();
 filesRouter.post(fileRoutes.paths.upload, validateAuth, fileRoutes.upload);
-filesRouter.put(fileRoutes.paths.replace, validateAuth, fileRoutes.replace);
 
 // Add filesRouter
 apiRouter.use(fileRoutes.paths.basePath, filesRouter);

@@ -1,10 +1,10 @@
-import List from 'src/db/models/List';
-import Review from 'src/db/models/Review';
-import { Place, User } from 'src/db/models/';
-import IListResponse from 'src/types/IListResponse';
-import IUserResponse from 'src/types/IUserResponse';
-import IReviewResponse from 'src/types/IReviewResponse';
-import IPlaceResponse from 'src/types/IPlaceResponse';
+import List from '../db/models/List';
+import Review from '../db/models/Review';
+import { Place, User } from '../db/models/';
+import IListResponse from '../types/IListResponse';
+import IUserResponse from '../types/IUserResponse';
+import IReviewResponse from '../types/IReviewResponse';
+import IPlaceResponse from '../types/IPlaceResponse';
 
 export const mapPlace = (place: Place): IPlaceResponse => ({
   id: place.id,

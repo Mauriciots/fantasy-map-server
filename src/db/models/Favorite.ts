@@ -1,7 +1,7 @@
 import { DataTypes, Optional, Model, NonAttribute } from 'sequelize';
 import User from './User';
 import Place from './Place';
-import { getSequelize } from '../../sequelize';
+import { getSequelize } from '@util/getsequelize';
 
 export interface IReviewOutput {
   id: number;

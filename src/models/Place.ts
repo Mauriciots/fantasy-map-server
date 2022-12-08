@@ -1,5 +1,5 @@
 import { DataTypes, Deferrable } from 'sequelize';
-import { getSequelize } from '../sequelize';
+import { getSequelize } from '@util/getsequelize';
 import Category from './Category';
 import User from './User_';
 

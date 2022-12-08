@@ -2,10 +2,10 @@ import EnvVars from '@configurations/EnvVars';
 import HttpStatusCodes from '@configurations/HttpStatusCodes';
 import { IReq, IRes } from '@declarations/types';
 import * as userServices from '@services/user-service';
-import IProfileRequest from 'src/types/IProfileRequest';
-import ISigninRequest from 'src/types/ISigninRequest';
-import ISigninResponse from 'src/types/ISigninResponse';
-import ISignupRequest from 'src/types/ISignupRequest';
+import IProfileRequest from '../types/IProfileRequest';
+import ISigninRequest from '../types/ISigninRequest';
+import ISigninResponse from '../types/ISigninResponse';
+import ISignupRequest from '../types/ISignupRequest';
 
 const paths = {
   basePath: '/users',

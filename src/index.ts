@@ -4,8 +4,7 @@ import logger from 'jet-logger';
 import EnvVars from '@configurations/EnvVars';
 import server from './server';
 
-import { getSequelize } from './sequelize';
-import { Place, Category, User } from './models';
+import { getSequelize } from '@util/getsequelize';
 
 // **** Start server **** //
 

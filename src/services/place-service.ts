@@ -1,7 +1,7 @@
-import User from 'src/db/models/User';
-import Place from 'src/db/models/Place';
-import Review from 'src/db/models/Review';
-import Favorite from 'src/db/models/Favorite';
+import User from '../db/models/User';
+import Place from '../db/models/Place';
+import Review from '../db/models/Review';
+import Favorite from '../db/models/Favorite';
 
 interface IUSerResponse {
   id: number;

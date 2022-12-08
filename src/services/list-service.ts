@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { getSequelize } from 'src/sequelize';
-import List, { IListOutput } from 'src/db/models/List';
-import Place from 'src/db/models/Place';
-import Review from 'src/db/models/Review';
-import User, { IUserOutput } from 'src/db/models/User';
+import { getSequelize } from '@util/getsequelize';
+import List, { IListOutput } from '../db/models/List';
+import Place from '../db/models/Place';
+import Review from '../db/models/Review';
+import User, { IUserOutput } from '../db/models/User';
 import { QueryTypes, Op } from 'sequelize';
-import IListRequest from 'src/types/IListRequest';
+import IListRequest from '../types/IListRequest';
 
 type PlaceWithAverageStars =
   | Omit<Place, 'reviews'>

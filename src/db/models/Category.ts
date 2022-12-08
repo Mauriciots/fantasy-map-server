@@ -1,5 +1,5 @@
 import { DataTypes, Optional, Model } from 'sequelize';
-import { getSequelize } from '../../sequelize';
+import { getSequelize } from '@util/getsequelize';
 
 export interface ICategoryOutput {
   id: number;

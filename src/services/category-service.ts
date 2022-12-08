@@ -1,4 +1,4 @@
-import Category from 'src/db/models/Category';
+import Category from '../db/models/Category';
 
 async function getAll(): Promise<Category[]> {
   return Category.findAll({

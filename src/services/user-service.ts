@@ -1,15 +1,15 @@
 import bcrypt from 'bcrypt';
-import User from 'src/db/models/User';
-import List from 'src/db/models/List';
-import Review from 'src/db/models/Review';
-import Place from 'src/db/models/Place';
-import IUserResponse from 'src/types/IUserResponse';
+import User from '../db/models/User';
+import List from '../db/models/List';
+import Review from '../db/models/Review';
+import Place from '../db/models/Place';
+import IUserResponse from '../types/IUserResponse';
 import { mapUser } from '@util/mappers';
-import ISignupRequest from 'src/types/ISignupRequest';
-import IProfileRequest from 'src/types/IProfileRequest';
-import Favorite from 'src/db/models/Favorite';
-import ISigninRequest from 'src/types/ISigninRequest';
-import ISigninResponse from 'src/types/ISigninResponse';
+import ISignupRequest from '../types/ISignupRequest';
+import IProfileRequest from '../types/IProfileRequest';
+import Favorite from '../db/models/Favorite';
+import ISigninRequest from '../types/ISigninRequest';
+import ISigninResponse from '../types/ISigninResponse';
 import jwtUtil from '@util/jwt-util';
 
 export async function getProfile(userId: number): Promise<IUserResponse | null> {

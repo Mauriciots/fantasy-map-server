@@ -1,4 +1,4 @@
-import Favorite from 'src/db/models/Favorite';
+import Favorite from '../db/models/Favorite';
 
 export async function toggleFavorite(userId: number, placeId: number): Promise<void> {
   const dbFav = await Favorite.findOne({

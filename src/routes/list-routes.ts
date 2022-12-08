@@ -1,7 +1,7 @@
 import HttpStatusCodes from '@configurations/HttpStatusCodes';
 import listService from '@services/list-service';
 import { IReq, IRes } from '@declarations/types';
-import IListRequest from 'src/types/IListRequest';
+import IListRequest from '../types/IListRequest';
 
 const paths = {
   basePath: '/lists',

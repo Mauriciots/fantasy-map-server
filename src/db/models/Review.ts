@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional, NonAttribute } from 'sequelize';
-import { getSequelize } from '../../sequelize';
+import { getSequelize } from '@util/getsequelize';
 import Place from './Place';
 import User from './User';
 

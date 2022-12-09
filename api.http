@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:3001/api
-@authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJtQHVyaWNpby5jb20iLCJuYW1lIjoiTWF1cmljaW8iLCJpYXQiOjE2NzAxODY5NzIsImV4cCI6MTY3MDIzMDE3Mn0.HUTCszpcUVObk27YgVEydznVqPz7iItDEsiRXp9qW68.efVsPgsXOVxHhzfjHan%2Bs0Swx4zl0OIJKDumaEDb5%2FQ
+@baseUrl = http://localhost:1234/api
+@authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJtQHVyaWNpby5jb20iLCJuYW1lIjoiTWF1cmljaW8gVG9tYXoiLCJpYXQiOjE2NzA1Mzk3MDIsImV4cCI6MTY3MDU4MjkwMn0.uVbFxvmmCBiMpJS7GJvQSZT0_fGBQqP8zBP63wnTCYI.pvdRd7BQy%2BVECi05F%2BsGem%2FSLc2DkyCR%2B2qz2nrS8qI
 
 ### Lists
 
@@ -114,19 +114,6 @@ Content-Type: image/jpeg
 < ./test-image.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-###
-
-PUT {{baseUrl}}/files/replace
-Cookie: {{authCookie}}
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="filetoupload"; filename="cc0d3c5f-c15e-4362-b6c4-90f12ad2e956-test-image.jpg"
-Content-Type: image/jpeg
-
-< ./cc0d3c5f-c15e-4362-b6c4-90f12ad2e956-test-image.jpg
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
 ### Reviews
 
 GET {{baseUrl}}/reviews/
@@ -180,6 +167,16 @@ content-type: application/json
   "email": "fran@gmaii.com",
   "password": "Amaz1-ng",
   "profilePicture": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngfind.com%2Fmpng%2FhiJwTJo_icon-user-icon-hd-png-download%2F&psig=AOvVaw2Ky-6ZUslVpDI-6qFOaM9p&ust=1668748375935000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKiO96S6tPsCFQAAAAAdAAAAABAE"
+}
+
+###
+
+POST {{baseUrl}}/users/signin
+content-type: application/json
+
+{
+  "username": "m@uricio.com",
+  "password": "Maur1c10"
 }
 
 ###

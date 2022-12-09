@@ -4,3 +4,4 @@
 env/*.env
 src/db/config.json
 src/public/uploads/*
+dist/

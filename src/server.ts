@@ -18,7 +18,7 @@ import { RouteError } from '@declarations/classes';
 const app = express();
 
 // **** Set basic express settings **** //
-console.log('force redeploy');
+console.log('force redeploy... again');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(EnvVars.cookieProps.secret));

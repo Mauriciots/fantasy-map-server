@@ -16,7 +16,7 @@ const HttpStatusCodes_1 = __importDefault(require("@configurations/HttpStatusCod
 const enums_1 = require("@declarations/enums");
 const classes_1 = require("@declarations/classes");
 const app = (0, express_1.default)();
-console.log('force redeploy');
+console.log('force redeploy... again');
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)(EnvVars_1.default.cookieProps.secret));

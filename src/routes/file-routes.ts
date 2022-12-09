@@ -14,7 +14,7 @@ const paths = {
 function upload(req: IReq, res: IRes) {
   const authData = req.app.locals.auth as { id: number };
   const form = new IncomingForm();
-  form.parse(req, (err, _fields, files) => {
+  form.parse(req, async (err, _fields, files) => {
     if (err) {
       return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send();
     }
@@ -25,7 +25,7 @@ function upload(req: IReq, res: IRes) {
 
     const filetoupload = files.filetoupload as File;
 
-    const newFilePath = fileService.saveFile(authData.id, filetoupload.filepath, filetoupload.originalFilename as string);
+    const newFilePath = await fileService.saveFile(authData.id, filetoupload.filepath, filetoupload.originalFilename as string);
     return res.status(HttpStatusCodes.OK).json(newFilePath);
   });
 }

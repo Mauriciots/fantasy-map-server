@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { v4 } from 'uuid';
-import path from 'path';
 import EnvVars from '@configurations/EnvVars';
 import { createClient } from '@supabase/supabase-js';
 

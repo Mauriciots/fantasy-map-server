@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:1234/api
+@baseUrl = https://ymm-fantasy-map.herokuapp.com/api
 @authCookie = AccessToken=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJtQHVyaWNpby5jb20iLCJuYW1lIjoiTWF1cmljaW8gVG9tYXoiLCJpYXQiOjE2NzA1Mzk3MDIsImV4cCI6MTY3MDU4MjkwMn0.uVbFxvmmCBiMpJS7GJvQSZT0_fGBQqP8zBP63wnTCYI.pvdRd7BQy%2BVECi05F%2BsGem%2FSLc2DkyCR%2B2qz2nrS8qI
 
 ### Lists

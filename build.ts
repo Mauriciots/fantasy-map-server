@@ -10,7 +10,7 @@ import childProcess from 'child_process';
 (async () => {
   try {
     // Remove current build
-    await remove('./build/');
+    // await remove('./build/');
     // Copy front-end files
     await copy('./src/public', './build/public');
     await copy('./src/views', './build/views');

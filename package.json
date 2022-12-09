@@ -5,7 +5,7 @@
     "build": "npx ts-node build.ts",
     "lint": "npx eslint --ext .ts src/",
     "lint:tests": "npx eslint --ext .ts spec/",
-    "start": "node -r module-alias/register ./dist --env=production",
+    "start": "node -r module-alias/register ./build --env=production",
     "dev": "nodemon",
     "test": "nodemon --config ./spec/nodemon.json",
     "test:no-reloading": "npx ts-node --files -r tsconfig-paths/register ./spec"
@@ -21,14 +21,14 @@
     "exec": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./src"
   },
   "_moduleAliases": {
-    "@services": "dist/services",
-    "@repos": "dist/repos",
-    "@models": "dist/models",
-    "@configurations": "dist/configurations",
-    "@declarations": "dist/declarations",
-    "@server": "dist/server",
-    "@routes": "dist/routes",
-    "@util": "dist/util"
+    "@services": "build/services",
+    "@repos": "build/repos",
+    "@models": "build/models",
+    "@configurations": "build/configurations",
+    "@declarations": "build/declarations",
+    "@server": "build/server",
+    "@routes": "build/routes",
+    "@util": "build/util"
   },
   "engines": {
     "node": ">=8.10.0"

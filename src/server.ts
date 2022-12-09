@@ -66,6 +66,10 @@ app.use(
 const staticDir = path.join(__dirname, 'public');
 app.use(express.static(staticDir));
 
+app.get('*', (_req,res) =>{
+  res.sendFile(staticDir);
+});
+
 // **** Export default **** //
 
 export default app;

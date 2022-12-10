@@ -1,5 +1,5 @@
 "use strict";
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     nodeEnv: (_a = process.env.NODE_ENV) !== null && _a !== void 0 ? _a : '',
@@ -27,4 +27,5 @@ exports.default = {
     dbName: (_o = process.env.DB_NAME) !== null && _o !== void 0 ? _o : '',
     sbProjectUrl: (_p = process.env.SB_PROJECT_URL) !== null && _p !== void 0 ? _p : '',
     sbApiKey: (_q = process.env.SB_API_KEY) !== null && _q !== void 0 ? _q : '',
+    sbUploadsBucket: (_r = process.env.SB_UPLOADS_BUCKET) !== null && _r !== void 0 ? _r : '',
 };

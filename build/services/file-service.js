@@ -29,7 +29,7 @@ function saveFile(userId, filePath, fileName) {
         if (!data && error) {
             throw error.message;
         }
-        return data.path;
+        return `${EnvVars_1.default.sbUploadsBucket}${data.path}`;
     });
 }
 exports.saveFile = saveFile;

@@ -18,5 +18,5 @@ export async function saveFile(userId: number, filePath: string, fileName: strin
     throw error.message;
   }
 
-  return data.path;
+  return `${EnvVars.sbUploadsBucket}${data.path}`;
 }

@@ -26,4 +26,5 @@ export default {
   dbName: process.env.DB_NAME ?? '',
   sbProjectUrl: process.env.SB_PROJECT_URL ?? '',
   sbApiKey: process.env.SB_API_KEY ?? '',
+  sbUploadsBucket: process.env.SB_UPLOADS_BUCKET ?? '',
 } as const;

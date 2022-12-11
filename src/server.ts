@@ -18,7 +18,6 @@ import { RouteError } from '@declarations/classes';
 const app = express();
 
 // **** Set basic express settings **** //
-console.log('force redeploy... again');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(EnvVars.cookieProps.secret));
@@ -70,12 +69,11 @@ app.get('*', (_req, res) =>{
   res.sendFile(path.join(staticDir, 'index.html'));
 });
 
-// Add Content Security Policy header
+// Disable helmet Content Security Policy
 app.use((_req, res, next) => {
-  const imgPolicy = "img-src 'self' https://fwopkmydqtaqjnappurl.supabase.co";
-  const scriptPolicy = "script-src 'self' https://maps.googleapis.com";
-  const defaultPolicy = "default-src 'self'";
-  res.setHeader('Content-Security-Policy', [imgPolicy, scriptPolicy, defaultPolicy].join('; '));
+  helmet({
+    contentSecurityPolicy: false,
+  });
   next();
 });
 

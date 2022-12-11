@@ -40,4 +40,11 @@ app.use(express_1.default.static(staticDir));
 app.get('*', (_req, res) => {
     res.sendFile(path_1.default.join(staticDir, 'index.html'));
 });
+app.use((_req, res, next) => {
+    const imgPolicy = "img-src 'self' https://fwopkmydqtaqjnappurl.supabase.co";
+    const scriptPolicy = "script-src 'self' https://maps.googleapis.com";
+    const defaultPolicy = "default-src 'self'";
+    res.setHeader('Content-Security-Policy', [imgPolicy, scriptPolicy, defaultPolicy].join('; '));
+    next();
+});
 exports.default = app;

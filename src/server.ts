@@ -70,6 +70,15 @@ app.get('*', (_req, res) =>{
   res.sendFile(path.join(staticDir, 'index.html'));
 });
 
+// Add Content Security Policy header
+app.use((_req, res, next) => {
+  const imgPolicy = "img-src 'self' https://fwopkmydqtaqjnappurl.supabase.co";
+  const scriptPolicy = "script-src 'self' https://maps.googleapis.com";
+  const defaultPolicy = "default-src 'self'";
+  res.setHeader('Content-Security-Policy', [imgPolicy, scriptPolicy, defaultPolicy].join('; '));
+  next();
+});
+
 // **** Export default **** //
 
 export default app;

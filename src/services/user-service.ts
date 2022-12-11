@@ -18,6 +18,9 @@ export async function getProfile(userId: number): Promise<IUserResponse | null> 
       {
         model: List,
         as: 'lists',
+        where: {
+          deleted: false,
+        }
       },
       {
         model: Review,

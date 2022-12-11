@@ -5,7 +5,6 @@ let sequelizeInstance: Sequelize | null = null;
 
 export const getSequelize = () => {
   if (!sequelizeInstance) {
-    console.log('Creating new sequelize instance');
     sequelizeInstance = new Sequelize(EnvVars.dbName, EnvVars.dbUser, EnvVars.dbPassword, {
       dialect: EnvVars.dbDialect as Dialect,
       host: EnvVars.dbHost,

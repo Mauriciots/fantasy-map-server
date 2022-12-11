@@ -16,7 +16,6 @@ const HttpStatusCodes_1 = __importDefault(require("@configurations/HttpStatusCod
 const enums_1 = require("@declarations/enums");
 const classes_1 = require("@declarations/classes");
 const app = (0, express_1.default)();
-console.log('force redeploy... again');
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)(EnvVars_1.default.cookieProps.secret));
@@ -41,10 +40,9 @@ app.get('*', (_req, res) => {
     res.sendFile(path_1.default.join(staticDir, 'index.html'));
 });
 app.use((_req, res, next) => {
-    const imgPolicy = "img-src 'self' https://fwopkmydqtaqjnappurl.supabase.co";
-    const scriptPolicy = "script-src 'self' https://maps.googleapis.com";
-    const defaultPolicy = "default-src 'self'";
-    res.setHeader('Content-Security-Policy', [imgPolicy, scriptPolicy, defaultPolicy].join('; '));
+    (0, helmet_1.default)({
+        contentSecurityPolicy: false,
+    });
     next();
 });
 exports.default = app;

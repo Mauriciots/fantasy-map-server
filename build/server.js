@@ -22,9 +22,6 @@ app.use((0, cookie_parser_1.default)(EnvVars_1.default.cookieProps.secret));
 if (EnvVars_1.default.nodeEnv === enums_1.NodeEnvs.Dev) {
     app.use((0, morgan_1.default)('dev'));
 }
-if (EnvVars_1.default.nodeEnv === enums_1.NodeEnvs.Production) {
-    app.use((0, helmet_1.default)());
-}
 app.use('/api', api_1.default);
 app.use((err, _, res, next) => {
     jet_logger_1.default.err(err, true);

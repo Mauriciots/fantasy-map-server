@@ -28,9 +28,9 @@ if (EnvVars.nodeEnv === NodeEnvs.Dev) {
 }
 
 // Security
-if (EnvVars.nodeEnv === NodeEnvs.Production) {
-  app.use(helmet());
-}
+// if (EnvVars.nodeEnv === NodeEnvs.Production) {
+//   app.use(helmet());
+// }
 
 // **** Add API routes **** //
 

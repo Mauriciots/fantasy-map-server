@@ -20,7 +20,8 @@ export async function getProfile(userId: number): Promise<IUserResponse | null> 
         as: 'lists',
         where: {
           deleted: false,
-        }
+        },
+        required: false,
       },
       {
         model: Review,
@@ -29,6 +30,7 @@ export async function getProfile(userId: number): Promise<IUserResponse | null> 
             model: Place,
           },
         ],
+        required: false,
       },
       {
         model: Favorite,
@@ -39,6 +41,7 @@ export async function getProfile(userId: number): Promise<IUserResponse | null> 
             as: 'place',
           },
         ],
+        required: false,
       },
     ],
   });
